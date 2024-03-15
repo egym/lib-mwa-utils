@@ -1,6 +1,6 @@
 {
-  "name": "mwa-utils",
-  "version": "0.1.0",
+  "name": "@egym/mwa-utils",
+  "version": "0.1.1",
   "types": "./dist/types/index.d.ts",
   "main": "./dist/lib/index.js",
   "module": "./dist/es/index.js",
@@ -29,21 +29,23 @@
     "node_modules/",
     "dist/"
   ],
-  "dependencies": {},
-  "peerDependencies": {},
   "devDependencies": {
-    "@modern-js/module-tools": "2.48.2",
     "@modern-js/eslint-config": "2.48.2",
-    "typescript": "~5.0.4",
+    "@modern-js/module-tools": "^2.48.2",
     "@types/node": "~16.11.7",
-    "rimraf": "~3.0.2",
+    "husky": "~8.0.1",
     "lint-staged": "~13.1.0",
     "prettier": "~2.8.1",
-    "husky": "~8.0.1"
+    "rimraf": "~3.0.2",
+    "typescript": "~5.0.4"
   },
   "sideEffects": [],
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "@egym/mwa-logger": "^0.2.8",
+    "@ionic/portals": "^0.9.0"
   }
 }
