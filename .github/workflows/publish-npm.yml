@@ -21,6 +21,6 @@ jobs:
       - run: npm install --omit peer
       - run: npm run lint
       - run: npm run build
-      - run: npm publish
+      - run: npm run release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.EGYM_NPM_TOKEN }}

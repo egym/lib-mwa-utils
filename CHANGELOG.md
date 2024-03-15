@@ -1,5 +1,11 @@
 # @egym/mwa-utils
 
+## 0.2.1
+
+### Patch Changes
+
+- try another publish
+
 ## 0.2.0
 
 ### Minor Changes
