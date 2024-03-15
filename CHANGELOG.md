@@ -1,5 +1,11 @@
 # @egym/mwa-utils
 
+## 0.2.2
+
+### Patch Changes
+
+- Add getPortalsInitialContext with fallback logic
+
 ## 0.2.1
 
 ### Patch Changes
