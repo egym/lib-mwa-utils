@@ -1,5 +1,11 @@
 # @egym/mwa-utils
 
+## 0.2.3
+
+### Patch Changes
+
+- Return full initial context response
+
 ## 0.2.2
 
 ### Patch Changes

@@ -5,13 +5,13 @@ import { getInitialContext as getPortals07InitialContext } from '../external-lib
 
 export const getPortalsInitialContext = <T>() => {
   try {
-    const result = getInitialContext<T>()?.value;
+    const result = getInitialContext<T>();
     logDebug('Use latest portals');
 
     return result;
   } catch {
     try {
-      const result = getPortals07InitialContext<T>()?.value;
+      const result = getPortals07InitialContext<T>();
       logDebug('Use v0.7.1 portals');
       return result;
     } catch (e) {
