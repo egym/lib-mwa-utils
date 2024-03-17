@@ -1,5 +1,11 @@
 # @egym/mwa-utils
 
+## 0.3.1
+
+### Patch Changes
+
+- rm omit peer
+
 ## 0.3.0
 
 ### Minor Changes
