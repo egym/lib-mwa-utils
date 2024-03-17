@@ -1,1 +1,5 @@
-export { getPortalsInitialContext } from './ionic-portals';
+export {
+  getPortalsInitialContext,
+  portalsPublish,
+  portalsSubscribe,
+} from './ionic-portals';

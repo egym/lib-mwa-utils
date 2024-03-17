@@ -1,5 +1,11 @@
 # @egym/mwa-utils
 
+## 0.3.2
+
+### Patch Changes
+
+- reexport portals pub/sub api
+
 ## 0.3.1
 
 ### Patch Changes
