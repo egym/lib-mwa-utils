@@ -1,5 +1,11 @@
 # @egym/mwa-utils
 
+## 0.3.0
+
+### Minor Changes
+
+- Add pub sub helpers
+
 ## 0.2.3
 
 ### Patch Changes

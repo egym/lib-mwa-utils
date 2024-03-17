@@ -1,6 +1,15 @@
-import { logDebug } from '@egym/mwa-logger';
-
-import { getInitialContext } from '@ionic/portals';
+import {
+  logDebug,
+  logPortalsRequest,
+  logPortalsResponse,
+} from '@egym/mwa-logger';
+import {
+  getInitialContext,
+  PortalMessage,
+  publish,
+  subscribe,
+} from '@ionic/portals';
+import { PluginListenerHandle } from '@capacitor/core';
 import { getInitialContext as getPortals07InitialContext } from '../external-libs-sources/ionicPortals0.7';
 
 export const getPortalsInitialContext = <T>() => {
@@ -20,4 +29,22 @@ export const getPortalsInitialContext = <T>() => {
       return undefined;
     }
   }
+};
+
+export const portalsPublish: typeof publish = async message => {
+  logPortalsRequest(`${message.topic} ${message.data.type}`, message.data);
+
+  await publish(message);
+};
+
+export const portalsSubscribe = async <T>(
+  topic: string,
+  callback: (result: PortalMessage<T>) => void,
+): Promise<PluginListenerHandle> => {
+  return subscribe<T>(topic, (...args) => {
+    logPortalsResponse(topic, {
+      ...args,
+    });
+    callback(...args);
+  });
 };
