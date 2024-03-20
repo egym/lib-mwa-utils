@@ -1,3 +1,15 @@
+# Usage
+
+## Install
+```
+npm install --save @egym/mwa-utils
+```
+
+## API
+1. `getPortalsInitialContext` is the same as `getInitialContext` from the standard `@ionic/portals` package, but with support for both v4 and v5 Capacitor versions
+2. `portalsPublish` is the same as `publish` from the standard `@ionic/portals` package, but with extra logging with the help of `@egym/mwa-logger`
+3. `portalsSubscribe` is the same as `subscribe` from the standard `@ionic/portals` package, but with extra logging with the help of `@egym/mwa-logger`
+
 # Modern.js Package
 
 ## Setup
