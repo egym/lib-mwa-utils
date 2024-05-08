@@ -18,7 +18,8 @@
     "gen-release-note": "modern gen-release-note",
     "release": "modern release",
     "new": "modern new",
-    "upgrade": "modern upgrade"
+    "upgrade": "modern upgrade",
+    "test": "modern test"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
@@ -32,12 +33,17 @@
   "peerDependencies": {
     "@capacitor/core": "^5.7.3",
     "@egym/mwa-logger": "^0.2.8",
-    "@ionic/portals": "^0.9.0"
+    "@ionic/portals": "^0.9.0",
+    "react": "^18.2.0"
   },
   "devDependencies": {
     "@modern-js/eslint-config": "2.48.2",
     "@modern-js/module-tools": "^2.48.2",
+    "@modern-js/plugin-testing": "2.48.2",
+    "@modern-js/runtime": "^2.49.2",
+    "@types/jest": "~29.2.4",
     "@types/node": "~16.11.7",
+    "@types/react": "^18.3.1",
     "husky": "~8.0.1",
     "lint-staged": "~13.1.0",
     "prettier": "~2.8.1",
