@@ -9,31 +9,25 @@ import {
 
 export const useMwaPortalSubscriptions = (): MwaPortalSubscriptionFn => {
   const subscribeBack = useCallback(
-    (
-      topic: MwaPortalSubscriptionTopics,
-      callback: (result: PortalMessage<void>) => void,
-    ) => {
-      return portalsSubscribe(topic, callback);
+    (callback: (result: PortalMessage<void>) => void) => {
+      return portalsSubscribe(MwaPortalSubscriptionTopics.back, callback);
     },
     [],
   );
 
   const subscribeAuthToken = useCallback(
-    (
-      topic: MwaPortalSubscriptionTopics,
-      callback: (result: PortalMessage<string>) => void,
-    ) => {
-      return portalsSubscribe(topic, callback);
+    (callback: (result: PortalMessage<string>) => void) => {
+      return portalsSubscribe(MwaPortalSubscriptionTopics.authToken, callback);
     },
     [],
   );
 
   const subscribeExerciserInfo = useCallback(
-    (
-      topic: MwaPortalSubscriptionTopics,
-      callback: (result: PortalMessage<MwaExerciserInfo>) => void,
-    ) => {
-      return portalsSubscribe(topic, callback);
+    (callback: (result: PortalMessage<MwaExerciserInfo>) => void) => {
+      return portalsSubscribe(
+        MwaPortalSubscriptionTopics.exerciserInfo,
+        callback,
+      );
     },
     [],
   );

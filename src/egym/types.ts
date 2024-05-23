@@ -65,19 +65,23 @@ export type MwaPortalCommandsFn = {
   ) => Promise<void>;
 };
 
-export type MwaPortalSubscriptionTopics = '';
+export enum MwaPortalSubscriptionTopics {
+  back = 'back',
+  authToken = 'authToken',
+  exerciserInfo = 'exerciserInfo',
+}
+
+export type SubscriptionFn<T> = (
+  callback: (result: PortalMessage<T>) => void,
+) => Promise<PluginListenerHandle>;
 
 export type MwaPortalSubscriptionFn = {
-  subscribeBack: (
-    topic: MwaPortalSubscriptionTopics,
-    callback: (result: PortalMessage<void>) => void,
-  ) => Promise<PluginListenerHandle>;
-  subscribeAuthToken: (
-    topic: MwaPortalSubscriptionTopics,
-    callback: (result: PortalMessage<string>) => void,
-  ) => Promise<PluginListenerHandle>;
-  subscribeExerciserInfo: (
-    topic: MwaPortalSubscriptionTopics,
-    callback: (result: PortalMessage<MwaExerciserInfo>) => void,
-  ) => Promise<PluginListenerHandle>;
+  subscribeBack: SubscriptionFn<void>;
+  subscribeAuthToken: SubscriptionFn<string>;
+  subscribeExerciserInfo: SubscriptionFn<MwaExerciserInfo>;
+};
+
+export type MwaPortalFlowsFn = {
+  getAuthToken: () => Promise<string>;
+  getExerciserInfo: () => Promise<MwaExerciserInfo>;
 };

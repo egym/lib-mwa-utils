@@ -8,6 +8,7 @@ export default defineConfig({
     jest: options => {
       return {
         ...options,
+        collectCoverage: true,
         moduleDirectories: ['node_modules', 'src/external-libs-sources'],
         moduleNameMapper: {
           ...(options.moduleNameMapper ?? {}),
