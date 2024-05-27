@@ -1,3 +1,4 @@
+import { InitialContext } from '@ionic/portals';
 import { MwaInitialContext, getMwaInitialContext } from '@/egym';
 
 const initialContext: MwaInitialContext = {
@@ -24,7 +25,11 @@ describe('getMwaInitialContext test cases', () => {
   test('getMwaInitialContext returns the initial context', () => {
     // Setup
     const { getInitialContext } = jest.requireMock('@ionic/portals');
-    getInitialContext.mockImplementationOnce(() => initialContext);
+    const initialContextWrapper: InitialContext<MwaInitialContext> = {
+      name: 'Test initialContext',
+      value: initialContext,
+    };
+    getInitialContext.mockImplementationOnce(() => initialContextWrapper);
 
     // Act
     const initialContextReturn = getMwaInitialContext();
