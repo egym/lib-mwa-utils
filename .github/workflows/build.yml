@@ -24,6 +24,9 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+          # Defaults to the user or organization that owns the workflow file
+          scope: '@egym'
 
       - name: Install npm dependencies
         run: npm install
@@ -37,7 +40,7 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Publis a prerelease package
-        run: |
-          npm run pre enter
-          npm run release --tag next
+      - name: Publish next package
+        run: npm publish --tag next
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.EGYM_NPM_TOKEN }}
