@@ -42,7 +42,7 @@ const useMwaPortalFlow = <T>(
     return () => {
       listenerHandler.then(listener => listener.remove());
     };
-  }, [subscriptionHandler, subscriptionFn, name]);
+  }, [subscriptionHandler, subscriptionFn]);
 
   return getFn;
 };

@@ -1,5 +1,5 @@
 import { PluginListenerHandle } from '@capacitor/core';
-import { renderHook } from '@modern-js/plugin-testing/runtime-base';
+import { renderHook, waitFor } from '@modern-js/plugin-testing/runtime-base';
 import { PortalMessage } from '@ionic/portals';
 import { useMwaPortalFlows } from '@/egym/mwa-flows';
 import { MwaExerciserInfo, MwaPortalSubscriptionTopics } from '@/egym';
@@ -150,5 +150,22 @@ describe('useMwaPortalFlows test cases', () => {
 
     // Verify
     await expect(exerciserInfoPromise).rejects.toBe('No data received');
+  });
+
+  test('unsubscribe from topics', async () => {
+    // Setup
+    const pluginListenerHandle: PluginListenerHandle = {
+      remove: jest.fn(),
+    };
+    const pluginListenerHandlePromise = Promise.resolve(pluginListenerHandle);
+    const { subscribe } = jest.requireMock('@ionic/portals');
+    subscribe.mockImplementation(() => pluginListenerHandlePromise);
+
+    // Act
+    const hookResult = renderHook(useMwaPortalFlows);
+    hookResult.unmount();
+
+    // Verify
+    await waitFor(() => expect(pluginListenerHandle.remove).toBeCalledTimes(2));
   });
 });
