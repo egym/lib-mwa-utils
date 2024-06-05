@@ -1,5 +1,11 @@
 # @egym/mwa-utils
 
+## 0.4.1
+
+### Patch Changes
+
+- Releasing the 0.4.x version
+
 ## 0.4.0
 
 ### Minor Changes

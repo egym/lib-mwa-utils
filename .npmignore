@@ -33,3 +33,11 @@ tsconfig.json
 CHANGELOG.md
 
 **/*/api/typings/auto-generated
+
+.changeset/
+.github/
+.husky/
+
+.eslintignore
+.nvmrc
+.prettierrc
