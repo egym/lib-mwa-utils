@@ -1,5 +1,11 @@
 # @egym/mwa-utils
 
+## 0.4.0
+
+### Minor Changes
+
+- Adding BMA specific API to be re-used by the different MWAs
+
 ## 0.3.2
 
 ### Patch Changes

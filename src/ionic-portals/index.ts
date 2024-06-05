@@ -31,13 +31,13 @@ export const getPortalsInitialContext = <T>() => {
   }
 };
 
-export const portalsPublish: typeof publish = async message => {
+export const portalsPublish: typeof publish = message => {
   logPortalsRequest(`${message.topic} ${message.data.type}`, message.data);
 
-  await publish(message);
+  return publish(message);
 };
 
-export const portalsSubscribe = async <T>(
+export const portalsSubscribe = <T>(
   topic: string,
   callback: (result: PortalMessage<T>) => void,
 ): Promise<PluginListenerHandle> => {
