@@ -15,7 +15,7 @@ npm install --save @egym/mwa-utils
 1. `getMwaInitialContext()` returns the initial context typed as `MwaInitialContext`.
 
 ### MWA Commands
-The commands are expose as the react hook `useMwaPortalCommands`. This hook returns a Javascript object with the following functions:
+The following functions are available to send commands to the BMA:
 1. `publishAuthToken()` publishes the `authToken` to the BMA.
 1. `publishDismiss()` publishes the `dismiss` command to the BMA.
 1. `publishExerciserInfo()` publishes the `exerciserInfo` to the BMA.
@@ -34,7 +34,7 @@ The commands are expose as the react hook `useMwaPortalCommands`. This hook retu
     * `parameters` is an optional object with key-value pairs to pass to the event.
 
 ### MWA Subscriptions
-The subscriptions are expose as the react hook `useMwaPortalSubscriptions`. This hook returns a Javascript object with the following functions:
+The following functions are available to subscribe to the BMA messages:
 1. `subscribeBack(callback: (result: PortalMessage<void>) => void)` subscribes to the `back` subscription. The BMA will send a `back` message when the user presses the back button for instance.
     * `callback` is a function that will be called when the `back` message is received.
 1. `subscribeAuthToken(callback: (result: PortalMessage<string>)` subscribes to the `authToken` subscription. The BMA will send the `authToken` message when the MWA send the command `publishAuthToken()`.
@@ -44,9 +44,9 @@ The subscriptions are expose as the react hook `useMwaPortalSubscriptions`. This
 
 ### MWA Flows
 The MWA Flows are an abstraction that combines the commands and subscriptions to provide a more user-friendly API.
-The flows are expose as the react hook `useMwaPortalFlows`. This hook returns a Javascript object with the following functions:
-1. `getAuthToken()` returns a promise that resolves with the `authToken` sent by the BMA over the `authToken` subscription topic. When this function is invoked, the MWA sends the `authToken` command to the BMA. When the `useMwaPortalFlows` hook is used, the `authToken` subscription is done automatically.
-2. `getExerciserInfo()` returns a promise that resolves with the `exerciserInfo` sent by the BMA over the `exerciserInfo` subscription topic. When this function is invoked, the MWA sends the `exerciserInfo` command to the BMA. When the `useMwaPortalFlows` hook is used, the `exerciserInfo` subscription is done automatically.
+The following functions that implement the MWA Flows are available:
+1. `getAuthTokenFlow()` returns a promise that resolves with the `authToken` sent by the BMA over the `authToken` subscription topic. When this function is invoked, the subscription to the `authToken` is done as part of invocation, and, the `authToken` command is sent to the BMA. When the BMA send the `authToken` message, the promise resolves with the message data and unsubscribes from the `authToken` subscription.
+2. `getExerciserInfoFlow()` returns a promise that resolves with the `exerciserInfo` sent by the BMA over the `exerciserInfo` subscription topic. When this function is invoked, the subscription to the `exerciserInfo` is done as part of invocation, and, the `exerciserInfo` command is sent to the BMA. When the BMA App send the `exerciserInfo` message, the promise resolves with the message data and unsubscribes from the `exerciserInfo` subscription.
 
 # Modern.js Package
 

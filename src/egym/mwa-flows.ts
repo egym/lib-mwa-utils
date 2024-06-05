@@ -47,8 +47,8 @@ const buildMwaFlow = <T>(
         promiseResolve = resolve;
         promiseReject = reject;
       });
+      commandFn();
     }
-    commandFn();
     return currentPromise;
   };
 
