@@ -1,7 +1,15 @@
-import { renderHook } from '@modern-js/plugin-testing/runtime-base';
 import { PortalMessage } from '@ionic/portals';
-import { MwaPortalCommandsData } from '@/egym';
-import { useMwaPortalCommands } from '@/egym/mwa-commands';
+import {
+  MwaPortalCommandsData,
+  publishAuthToken,
+  publishDismiss,
+  publishExerciserInfo,
+  publishOpenFeature,
+  publishOpenNativeFeature,
+  publishOpenUrlExternally,
+  publishOpenWebView,
+  publishTrackEvent,
+} from '@/egym';
 
 jest.mock('@ionic/portals', () => {
   return {
@@ -27,8 +35,7 @@ describe('useMwaPortalCommands test cases', () => {
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
-    const hookResult = renderHook(useMwaPortalCommands);
-    const authTokenResult = await hookResult.result.current.publishAuthToken();
+    const authTokenResult = await publishAuthToken();
 
     // Verify
     expect(authTokenResult).toBeUndefined();
@@ -48,8 +55,7 @@ describe('useMwaPortalCommands test cases', () => {
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
-    const hookResult = renderHook(useMwaPortalCommands);
-    const dismissResult = await hookResult.result.current.publishDismiss();
+    const dismissResult = await publishDismiss();
 
     // Verify
     expect(dismissResult).toBeUndefined();
@@ -69,9 +75,7 @@ describe('useMwaPortalCommands test cases', () => {
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
-    const hookResult = renderHook(useMwaPortalCommands);
-    const exerciserInfoResult =
-      await hookResult.result.current.publishExerciserInfo();
+    const exerciserInfoResult = await publishExerciserInfo();
 
     // Verify
     expect(exerciserInfoResult).toBeUndefined();
@@ -94,9 +98,7 @@ describe('useMwaPortalCommands test cases', () => {
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
-    const hookResult = renderHook(useMwaPortalCommands);
-    const openFeatureResult =
-      await hookResult.result.current.publishOpenFeature('/test');
+    const openFeatureResult = await publishOpenFeature('/test');
 
     // Verify
     expect(openFeatureResult).toBeUndefined();
@@ -120,12 +122,10 @@ describe('useMwaPortalCommands test cases', () => {
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
-    const hookResult = renderHook(useMwaPortalCommands);
-    const openNativeFeatureResult =
-      await hookResult.result.current.publishOpenNativeFeature(
-        'native-feature',
-        { fieldA: 'value of A' },
-      );
+    const openNativeFeatureResult = await publishOpenNativeFeature(
+      'native-feature',
+      { fieldA: 'value of A' },
+    );
 
     // Verify
     expect(openNativeFeatureResult).toBeUndefined();
@@ -148,11 +148,9 @@ describe('useMwaPortalCommands test cases', () => {
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
-    const hookResult = renderHook(useMwaPortalCommands);
-    const openNativeFeatureResult =
-      await hookResult.result.current.publishOpenNativeFeature(
-        'native-feature',
-      );
+    const openNativeFeatureResult = await publishOpenNativeFeature(
+      'native-feature',
+    );
 
     // Verify
     expect(openNativeFeatureResult).toBeUndefined();
@@ -176,12 +174,10 @@ describe('useMwaPortalCommands test cases', () => {
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
-    const hookResult = renderHook(useMwaPortalCommands);
-    const openWebViewResult =
-      await hookResult.result.current.publishOpenWebView(
-        'https://example.com',
-        ['pattern-one', 'pattern-two'],
-      );
+    const openWebViewResult = await publishOpenWebView('https://example.com', [
+      'pattern-one',
+      'pattern-two',
+    ]);
 
     // Verify
     expect(openWebViewResult).toBeUndefined();
@@ -205,9 +201,7 @@ describe('useMwaPortalCommands test cases', () => {
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
-    const hookResult = renderHook(useMwaPortalCommands);
-    const openWebViewResult =
-      await hookResult.result.current.publishOpenWebView('https://example.com');
+    const openWebViewResult = await publishOpenWebView('https://example.com');
 
     // Verify
     expect(openWebViewResult).toBeUndefined();
@@ -230,11 +224,9 @@ describe('useMwaPortalCommands test cases', () => {
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
-    const hookResult = renderHook(useMwaPortalCommands);
-    const openUrlExternallyResult =
-      await hookResult.result.current.publishOpenUrlExternally(
-        'https://example.com',
-      );
+    const openUrlExternallyResult = await publishOpenUrlExternally(
+      'https://example.com',
+    );
 
     // Verify
     expect(openUrlExternallyResult).toBeUndefined();
@@ -261,14 +253,10 @@ describe('useMwaPortalCommands test cases', () => {
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
-    const hookResult = renderHook(useMwaPortalCommands);
-    const trackEventResult = await hookResult.result.current.publishTrackEvent(
-      'event-name',
-      {
-        paramA: 'valueA',
-        'other-param': 'otherValue',
-      },
-    );
+    const trackEventResult = await publishTrackEvent('event-name', {
+      paramA: 'valueA',
+      'other-param': 'otherValue',
+    });
 
     // Verify
     expect(trackEventResult).toBeUndefined();
@@ -291,10 +279,7 @@ describe('useMwaPortalCommands test cases', () => {
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
-    const hookResult = renderHook(useMwaPortalCommands);
-    const trackEventResult = await hookResult.result.current.publishTrackEvent(
-      'event-name',
-    );
+    const trackEventResult = await publishTrackEvent('event-name');
 
     // Verify
     expect(trackEventResult).toBeUndefined();

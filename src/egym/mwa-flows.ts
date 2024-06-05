@@ -1,61 +1,77 @@
-import { useCallback, useEffect, useRef } from 'react';
 import { PortalMessage } from '@ionic/portals';
-import { useMwaPortalSubscriptions } from './mwa-subscriptions';
-import { MwaPortalFlowsFn, SubscriptionFn } from './types';
-import { useMwaPortalCommands } from './mwa-commands';
+import { PluginListenerHandle } from '@capacitor/core';
+import {
+  subscribeAuthToken,
+  subscribeExerciserInfo,
+} from './mwa-subscriptions';
+import { MwaExerciserInfo, MwaFlowFn, SubscriptionFn } from './types';
+import { publishAuthToken, publishExerciserInfo } from './mwa-commands';
 
-const useMwaPortalFlow = <T>(
-  triggerFn: () => Promise<void>,
+const buildMwaFlow = <T>(
+  commandFn: () => Promise<void>,
   subscriptionFn: SubscriptionFn<T>,
-): (() => Promise<T>) => {
-  const promiseResolve = useRef<(value: T | PromiseLike<T>) => void>();
-  const promiseReject = useRef<(reason?: any) => void>();
-  const currentPromise = useRef<Promise<T>>();
+): MwaFlowFn<T> => {
+  let promiseResolve: ((value: T | PromiseLike<T>) => void) | undefined;
+  let promiseReject: ((reason?: any) => void) | undefined;
+  let currentPromise: Promise<T> | undefined;
+  let listenerHandler: Promise<PluginListenerHandle> | undefined;
 
-  const getFn = useCallback(() => {
-    if (!currentPromise.current) {
-      currentPromise.current = new Promise<T>((resolve, reject) => {
-        promiseResolve.current = resolve;
-        promiseReject.current = reject;
+  const unsubscribe = async () => {
+    if (listenerHandler) {
+      const listener = await listenerHandler;
+      await listener.remove();
+      listenerHandler = undefined;
+    }
+  };
+
+  const subscriptionHandler = (message: PortalMessage<T>) => {
+    if (promiseResolve && promiseReject) {
+      if (message.data) {
+        promiseResolve(message.data);
+      } else {
+        promiseReject('No data received');
+      }
+      promiseResolve = undefined;
+      promiseReject = undefined;
+    }
+    currentPromise = undefined;
+    unsubscribe();
+  };
+
+  const getFn = () => {
+    if (!listenerHandler) {
+      listenerHandler = subscriptionFn(subscriptionHandler);
+    }
+    if (!currentPromise) {
+      currentPromise = new Promise<T>((resolve, reject) => {
+        promiseResolve = resolve;
+        promiseReject = reject;
       });
     }
-    triggerFn();
-    return currentPromise.current;
-  }, []);
-
-  const subscriptionHandler = useCallback((message: PortalMessage<T>) => {
-    if (promiseResolve.current && promiseReject.current) {
-      if (message.data) {
-        promiseResolve.current(message.data);
-      } else {
-        promiseReject.current('No data received');
-      }
-      promiseResolve.current = undefined;
-      promiseReject.current = undefined;
-    }
-    currentPromise.current = undefined;
-  }, []);
-
-  useEffect(() => {
-    const listenerHandler = subscriptionFn(subscriptionHandler);
-
-    return () => {
-      listenerHandler.then(listener => listener.remove());
-    };
-  }, [subscriptionHandler, subscriptionFn]);
+    commandFn();
+    return currentPromise;
+  };
 
   return getFn;
 };
 
-export const useMwaPortalFlows = (): MwaPortalFlowsFn => {
-  const { subscribeAuthToken, subscribeExerciserInfo } =
-    useMwaPortalSubscriptions();
-  const { publishAuthToken, publishExerciserInfo } = useMwaPortalCommands();
+let authTokenFlow: MwaFlowFn<string>;
 
-  const getAuthToken = useMwaPortalFlow(publishAuthToken, subscribeAuthToken);
-  const getExerciserInfo = useMwaPortalFlow(
-    publishExerciserInfo,
-    subscribeExerciserInfo,
-  );
-  return { getAuthToken, getExerciserInfo };
+export const getAuthTokenFlow = (): Promise<string> => {
+  if (!authTokenFlow) {
+    authTokenFlow = buildMwaFlow(publishAuthToken, subscribeAuthToken);
+  }
+  return authTokenFlow();
+};
+
+let exerciserInfoFlow: MwaFlowFn<MwaExerciserInfo>;
+
+export const getExerciserInfoFlow = (): Promise<MwaExerciserInfo> => {
+  if (!exerciserInfoFlow) {
+    exerciserInfoFlow = buildMwaFlow(
+      publishExerciserInfo,
+      subscribeExerciserInfo,
+    );
+  }
+  return exerciserInfoFlow();
 };

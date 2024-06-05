@@ -1,8 +1,11 @@
 import { PluginListenerHandle } from '@capacitor/core';
-import { renderHook, waitFor } from '@modern-js/plugin-testing/runtime-base';
 import { PortalMessage } from '@ionic/portals';
-import { useMwaPortalFlows } from '@/egym/mwa-flows';
-import { MwaExerciserInfo, MwaPortalSubscriptionTopics } from '@/egym';
+import {
+  MwaExerciserInfo,
+  MwaPortalSubscriptionTopics,
+  getAuthTokenFlow,
+  getExerciserInfoFlow,
+} from '@/egym';
 
 jest.mock('@ionic/portals', () => {
   return {
@@ -31,9 +34,10 @@ describe('useMwaPortalFlows test cases', () => {
       data: authToken,
     };
 
-    // Act
-    const hookResult = renderHook(useMwaPortalFlows);
-    const authTokenPromise = hookResult.result.current.getAuthToken();
+    // Act - when invoked multiple times, it should always return the same promise until it gets resolved
+    const authTokenPromise1 = getAuthTokenFlow();
+    const authTokenPromise2 = getAuthTokenFlow();
+    const authTokenPromise3 = getAuthTokenFlow();
 
     const foundInvocation = (subscribe.mock.calls ?? []).find(
       (invocation: any[]) =>
@@ -46,7 +50,10 @@ describe('useMwaPortalFlows test cases', () => {
     passedBackCallback(message);
 
     // Verify
-    await expect(authTokenPromise).resolves.toBe(authToken);
+    await expect(authTokenPromise1).resolves.toBe(authToken);
+    await expect(authTokenPromise2).resolves.toBe(authToken);
+    await expect(authTokenPromise3).resolves.toBe(authToken);
+    expect(pluginListenerHandle.remove).toBeCalledTimes(1);
   });
 
   test('getAuthToken get the token when data is undefined', async () => {
@@ -62,8 +69,7 @@ describe('useMwaPortalFlows test cases', () => {
     };
 
     // Act
-    const hookResult = renderHook(useMwaPortalFlows);
-    const authTokenPromise = hookResult.result.current.getAuthToken();
+    const authTokenPromise = getAuthTokenFlow();
 
     const foundInvocation = (subscribe.mock.calls ?? []).find(
       (invocation: any[]) =>
@@ -77,6 +83,7 @@ describe('useMwaPortalFlows test cases', () => {
 
     // Verify
     await expect(authTokenPromise).rejects.toBe('No data received');
+    expect(pluginListenerHandle.remove).toBeCalledTimes(1);
   });
 
   test('getExerciserInfo get the Exerciser info correctly', async () => {
@@ -104,9 +111,10 @@ describe('useMwaPortalFlows test cases', () => {
       data: exerciserInfo,
     };
 
-    // Act
-    const hookResult = renderHook(useMwaPortalFlows);
-    const exerciserInfoPromise = hookResult.result.current.getExerciserInfo();
+    // Act - when invoked multiple times, it should always return the same promise until it gets resolved
+    const exerciserInfoPromise1 = getExerciserInfoFlow();
+    const exerciserInfoPromise2 = getExerciserInfoFlow();
+    const exerciserInfoPromise3 = getExerciserInfoFlow();
 
     const foundInvocation = (subscribe.mock.calls ?? []).find(
       (invocation: any[]) =>
@@ -119,7 +127,10 @@ describe('useMwaPortalFlows test cases', () => {
     passedBackCallback(message);
 
     // Verify
-    await expect(exerciserInfoPromise).resolves.toBe(exerciserInfo);
+    await expect(exerciserInfoPromise1).resolves.toBe(exerciserInfo);
+    await expect(exerciserInfoPromise2).resolves.toBe(exerciserInfo);
+    await expect(exerciserInfoPromise3).resolves.toBe(exerciserInfo);
+    expect(pluginListenerHandle.remove).toBeCalledTimes(1);
   });
 
   test('getExerciserInfo get the Exerciser info when data is undefined', async () => {
@@ -135,8 +146,7 @@ describe('useMwaPortalFlows test cases', () => {
     };
 
     // Act
-    const hookResult = renderHook(useMwaPortalFlows);
-    const exerciserInfoPromise = hookResult.result.current.getExerciserInfo();
+    const exerciserInfoPromise = getExerciserInfoFlow();
 
     const foundInvocation = (subscribe.mock.calls ?? []).find(
       (invocation: any[]) =>
@@ -150,22 +160,6 @@ describe('useMwaPortalFlows test cases', () => {
 
     // Verify
     await expect(exerciserInfoPromise).rejects.toBe('No data received');
-  });
-
-  test('unsubscribe from topics', async () => {
-    // Setup
-    const pluginListenerHandle: PluginListenerHandle = {
-      remove: jest.fn(),
-    };
-    const pluginListenerHandlePromise = Promise.resolve(pluginListenerHandle);
-    const { subscribe } = jest.requireMock('@ionic/portals');
-    subscribe.mockImplementation(() => pluginListenerHandlePromise);
-
-    // Act
-    const hookResult = renderHook(useMwaPortalFlows);
-    hookResult.unmount();
-
-    // Verify
-    await waitFor(() => expect(pluginListenerHandle.remove).toBeCalledTimes(2));
+    expect(pluginListenerHandle.remove).toBeCalledTimes(1);
   });
 });

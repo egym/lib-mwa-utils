@@ -45,26 +45,6 @@ export type MwaPortalCommandsData<Data = any> = {
   data?: Data;
 };
 
-export type MwaPortalCommandsFn = {
-  publishAuthToken: () => Promise<void>;
-  publishDismiss: () => Promise<void>;
-  publishExerciserInfo: () => Promise<void>;
-  publishOpenFeature: (startingRoute: string) => Promise<void>;
-  publishOpenNativeFeature: (
-    featureId: string,
-    data?: { [key: string]: string },
-  ) => Promise<void>;
-  publishOpenWebView: (
-    url: string,
-    endFlowUrlPatterns?: string[],
-  ) => Promise<void>;
-  publishOpenUrlExternally: (url: string) => Promise<void>;
-  publishTrackEvent: (
-    eventName: string,
-    parameters?: { [key: string]: string },
-  ) => Promise<void>;
-};
-
 export enum MwaPortalSubscriptionTopics {
   back = 'back',
   authToken = 'authToken',
@@ -75,13 +55,4 @@ export type SubscriptionFn<T> = (
   callback: (result: PortalMessage<T>) => void,
 ) => Promise<PluginListenerHandle>;
 
-export type MwaPortalSubscriptionFn = {
-  subscribeBack: SubscriptionFn<void>;
-  subscribeAuthToken: SubscriptionFn<string>;
-  subscribeExerciserInfo: SubscriptionFn<MwaExerciserInfo>;
-};
-
-export type MwaPortalFlowsFn = {
-  getAuthToken: () => Promise<string>;
-  getExerciserInfo: () => Promise<MwaExerciserInfo>;
-};
+export type MwaFlowFn<T> = () => Promise<T>;

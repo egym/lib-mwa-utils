@@ -1,103 +1,79 @@
-import { useCallback } from 'react';
 import { portalsPublish } from '..';
-import {
-  MwaPortalCommandsData,
-  MwaPortalCommandsFn,
-  MwaPortalMessageTopics,
-} from './types';
+import { MwaPortalCommandsData, MwaPortalMessageTopics } from './types';
 
-export const useMwaPortalCommands = (): MwaPortalCommandsFn => {
-  const publishCommand = useCallback(
-    (topic: MwaPortalMessageTopics, data: MwaPortalCommandsData) => {
-      return portalsPublish({
-        topic,
-        data,
-      });
+const publishCommand = (
+  topic: MwaPortalMessageTopics,
+  data: MwaPortalCommandsData,
+) => {
+  return portalsPublish({
+    topic,
+    data,
+  });
+};
+
+export const publishAuthToken = () => {
+  return publishCommand('subscription', {
+    type: 'authToken',
+  });
+};
+
+export const publishDismiss = () => {
+  return publishCommand('subscription', {
+    type: 'dismiss',
+  });
+};
+
+export const publishExerciserInfo = () => {
+  return publishCommand('subscription', {
+    type: 'exerciserInfo',
+  });
+};
+
+export const publishOpenFeature = (startingRoute: string) => {
+  return publishCommand('subscription', {
+    type: 'openFeature',
+    data: {
+      startingRoute,
     },
-    [],
-  );
+  });
+};
 
-  const publishAuthToken = useCallback(() => {
-    return publishCommand('subscription', {
-      type: 'authToken',
-    });
-  }, [publishCommand]);
-
-  const publishDismiss = useCallback(() => {
-    return publishCommand('subscription', {
-      type: 'dismiss',
-    });
-  }, [publishCommand]);
-
-  const publishExerciserInfo = useCallback(() => {
-    return publishCommand('subscription', {
-      type: 'exerciserInfo',
-    });
-  }, [publishCommand]);
-
-  const publishOpenFeature = useCallback(
-    (startingRoute: string) => {
-      return publishCommand('subscription', {
-        type: 'openFeature',
-        data: {
-          startingRoute,
-        },
-      });
+export const publishOpenNativeFeature = (
+  featureId: string,
+  data?: { [key: string]: string },
+) => {
+  return publishCommand('subscription', {
+    type: 'openNativeFeature',
+    data: {
+      featureId,
+      data,
     },
-    [publishCommand],
-  );
+  });
+};
 
-  const publishOpenNativeFeature = useCallback(
-    (featureId: string, data?: { [key: string]: string }) => {
-      return publishCommand('subscription', {
-        type: 'openNativeFeature',
-        data: {
-          featureId,
-          data,
-        },
-      });
-    },
-    [publishCommand],
-  );
+export const publishOpenWebView = (
+  url: string,
+  endFlowUrlPatterns: string[] = [],
+) => {
+  return publishCommand('subscription', {
+    type: 'openWebView',
+    data: { url, endFlowUrlPatterns },
+  });
+};
 
-  const publishOpenWebView = useCallback(
-    (url: string, endFlowUrlPatterns: string[] = []) => {
-      return publishCommand('subscription', {
-        type: 'openWebView',
-        data: { url, endFlowUrlPatterns },
-      });
-    },
-    [publishCommand],
-  );
+export const publishOpenUrlExternally = (url: string) => {
+  return publishCommand('subscription', {
+    type: 'openUrlExternally',
+    data: { url },
+  });
+};
 
-  const publishOpenUrlExternally = useCallback(
-    (url: string) => {
-      return publishCommand('subscription', {
-        type: 'openUrlExternally',
-        data: { url },
-      });
-    },
-    [publishCommand],
-  );
-
-  const publishTrackEvent = useCallback(
-    (eventName: string, parameters?: { [key: string]: string }) => {
-      return publishCommand('subscription', {
-        type: 'trackEvent',
-        data: { name: eventName, parameters },
-      });
-    },
-    [publishCommand],
-  );
-
-  return {
-    publishAuthToken,
-    publishDismiss,
-    publishExerciserInfo,
-    publishOpenFeature,
-    publishOpenNativeFeature,
-    publishOpenWebView,
-    publishOpenUrlExternally,
-    publishTrackEvent,
-  };
+export const publishTrackEvent = (
+  eventName: string,
+  parameters?: { [key: string]: string },
+) => {
+  return publishCommand('subscription', {
+    type: 'trackEvent',
+    data: { name: eventName, parameters },
+  });
 };

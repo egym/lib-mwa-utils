@@ -1,5 +1,18 @@
 export * from './types';
 export { getMwaInitialContext } from './mwa-functions';
-export { useMwaPortalCommands } from './mwa-commands';
-export { useMwaPortalSubscriptions } from './mwa-subscriptions';
-export { useMwaPortalFlows } from './mwa-flows';
+export {
+  publishAuthToken,
+  publishDismiss,
+  publishExerciserInfo,
+  publishOpenFeature,
+  publishOpenNativeFeature,
+  publishOpenUrlExternally,
+  publishOpenWebView,
+  publishTrackEvent,
+} from './mwa-commands';
+export {
+  subscribeAuthToken,
+  subscribeBack,
+  subscribeExerciserInfo,
+} from './mwa-subscriptions';
+export { getAuthTokenFlow, getExerciserInfoFlow } from './mwa-flows';

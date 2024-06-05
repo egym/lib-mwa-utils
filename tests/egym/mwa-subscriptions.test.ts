@@ -1,8 +1,12 @@
 import { PluginListenerHandle } from '@capacitor/core';
-import { renderHook } from '@modern-js/plugin-testing/runtime-base';
 import { PortalMessage } from '@ionic/portals';
-import { useMwaPortalSubscriptions } from '@/egym/mwa-subscriptions';
-import { MwaExerciserInfo, MwaPortalSubscriptionTopics } from '@/egym';
+import {
+  MwaExerciserInfo,
+  MwaPortalSubscriptionTopics,
+  subscribeAuthToken,
+  subscribeBack,
+  subscribeExerciserInfo,
+} from '@/egym';
 
 jest.mock('@ionic/portals', () => {
   return {
@@ -34,10 +38,7 @@ describe('useMwaPortalSubscriptions test cases', () => {
     };
 
     // Act
-    const hookResult = renderHook(useMwaPortalSubscriptions);
-    const subscribeReturn = await hookResult.result.current.subscribeBack(
-      callback,
-    );
+    const subscribeReturn = await subscribeBack(callback);
 
     // Verify
     expect(subscribe).toBeCalledTimes(1);
@@ -73,10 +74,7 @@ describe('useMwaPortalSubscriptions test cases', () => {
     };
 
     // Act
-    const hookResult = renderHook(useMwaPortalSubscriptions);
-    const subscribeReturn = await hookResult.result.current.subscribeAuthToken(
-      callback,
-    );
+    const subscribeReturn = await subscribeAuthToken(callback);
 
     // Verify
     expect(subscribe).toBeCalledTimes(1);
@@ -123,9 +121,8 @@ describe('useMwaPortalSubscriptions test cases', () => {
     };
 
     // Act
-    const hookResult = renderHook(useMwaPortalSubscriptions);
-    const subscribeReturn =
-      await hookResult.result.current.subscribeExerciserInfo(callback);
+
+    const subscribeReturn = await subscribeExerciserInfo(callback);
 
     // Verify
     expect(subscribe).toBeCalledTimes(1);
