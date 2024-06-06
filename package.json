@@ -1,6 +1,6 @@
 {
   "name": "@egym/mwa-utils",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "types": "./dist/types/index.d.ts",
   "main": "./dist/lib/index.js",
   "module": "./dist/es/index.js",
