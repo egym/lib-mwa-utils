@@ -33,7 +33,7 @@
   "peerDependencies": {
     "@capacitor/core": "^6.1.2",
     "@egym/mwa-logger": "^0.2.8",
-    "@ionic/portals": "^0.9.0"
+    "@ionic/portals": "^0.10.0"
   },
   "devDependencies": {
     "@modern-js/eslint-config": "2.48.2",
