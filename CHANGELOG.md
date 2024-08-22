@@ -1,8 +1,8 @@
 # @egym/mwa-utils
 
-## 0.4.2
+## 0.5.0
 
-### Patch Changes
+### Minor Changes
 
 - update capacitor v5 to v6
 
