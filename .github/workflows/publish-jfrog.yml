@@ -18,9 +18,8 @@ jobs:
           registry-url: 'https://egym.jfrog.io/egym/api/npm/npm-local/'
           # Defaults to the user or organization that owns the workflow file
           scope: '@egym'
+      - run: curl --user ${{ secrets.ARTIFACTORY_USERNAME }}:${{ secrets.ARTIFACTORY_PASSWORD }} https://egym.jfrog.io/egym/api/npm/npm-local/auth/egym > ~/.npmrc
       - run: npm install
       - run: npm run lint
       - run: npm run build
       - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.EGYM_NPM_TOKEN }}
