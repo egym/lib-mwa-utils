@@ -1,4 +1,4 @@
-name: Publish package to github packages
+name: Publish package to jfrog
 on:
   release:
     types: [published]
@@ -10,17 +10,14 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v4
-      # Setup .npmrc file to publish to GitHub Packages
+      # Setup .npmrc file to publish to jfrog
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
           cache: 'npm'
-          registry-url: 'https://npm.pkg.github.com'
-          # Defaults to the user or organization that owns the workflow file
-          scope: '@egym'
+          cache-dependency-path: package-lock.json
+      - run: curl --user ${{ secrets.ARTIFACTORY_USERNAME }}:${{ secrets.ARTIFACTORY_PASSWORD }} https://egym.jfrog.io/egym/api/npm/npm-local/auth/egym > ~/.npmrc
       - run: npm install
       - run: npm run lint
       - run: npm run build
       - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
