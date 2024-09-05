@@ -3,9 +3,19 @@ import { PluginListenerHandle } from '@capacitor/core';
 import {
   subscribeAuthToken,
   subscribeExerciserInfo,
+  subscribeLinking,
 } from './mwa-subscriptions';
-import { MwaExerciserInfo, MwaFlowFn, SubscriptionFn } from './types';
-import { publishAuthToken, publishExerciserInfo } from './mwa-commands';
+import {
+  MwaExerciserInfo,
+  MwaFlowFn,
+  MwaLinking,
+  SubscriptionFn,
+} from './types';
+import {
+  publishAuthToken,
+  publishExerciserInfo,
+  publishLinking,
+} from './mwa-commands';
 
 const buildMwaFlow = <T>(
   commandFn: () => Promise<void>,
@@ -74,4 +84,13 @@ export const getExerciserInfoFlow = (): Promise<MwaExerciserInfo> => {
     );
   }
   return exerciserInfoFlow();
+};
+
+let linkingFlow: MwaFlowFn<MwaLinking>;
+
+export const getLinkingFlow = (): Promise<MwaLinking> => {
+  if (!linkingFlow) {
+    linkingFlow = buildMwaFlow(publishLinking, subscribeLinking);
+  }
+  return linkingFlow();
 };

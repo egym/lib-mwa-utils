@@ -5,7 +5,9 @@ import {
   MwaPortalSubscriptionTopics,
   getAuthTokenFlow,
   getExerciserInfoFlow,
+  MwaLinking,
 } from '@/egym';
+import { getLinkingFlow } from '@/egym/mwa-flows';
 
 jest.mock('@ionic/portals', () => {
   return {
@@ -161,5 +163,74 @@ describe('useMwaPortalFlows test cases', () => {
     // Verify
     await expect(exerciserInfoPromise).rejects.toBe('No data received');
     expect(pluginListenerHandle.remove).toBeCalledTimes(1);
+  });
+
+  test('getLinkingFlow get the Linking correctly', async () => {
+    // Setup
+    const linking: MwaLinking = {
+      status: 'linked',
+      egymEmail: '',
+    };
+
+    const pluginListenerHandle: PluginListenerHandle = {
+      remove: jest.fn(),
+    };
+    const { subscribe } = jest.requireMock('@ionic/portals');
+    subscribe.mockImplementation(() => Promise.resolve(pluginListenerHandle));
+
+    const message: PortalMessage<MwaLinking> = {
+      topic: MwaPortalSubscriptionTopics.linking,
+      data: linking,
+    };
+
+    // Act - when invoked multiple times, it should always return the same promise until it gets resolved
+    const linkingPromise1 = getLinkingFlow();
+    const linkingPromise2 = getLinkingFlow();
+    const linkingPromise3 = getLinkingFlow();
+
+    const foundInvocation = (subscribe.mock.calls ?? []).find(
+      (invocation: any[]) =>
+        invocation[0] === MwaPortalSubscriptionTopics.linking,
+    );
+    expect(foundInvocation).toHaveLength(2);
+    const passedBackCallback = foundInvocation?.[1];
+
+    expect(typeof passedBackCallback).toBe('function');
+    passedBackCallback(message);
+
+    // Verify
+    await expect(linkingPromise1).resolves.toBe(linking);
+    await expect(linkingPromise2).resolves.toBe(linking);
+    await expect(linkingPromise3).resolves.toBe(linking);
+    expect(pluginListenerHandle.remove).toBeCalledTimes(1);
+  });
+
+  test('getLinkingFlow get the Linking when data is undefined', async () => {
+    // Setup
+    const pluginListenerHandle: PluginListenerHandle = {
+      remove: jest.fn(),
+    };
+    const { subscribe } = jest.requireMock('@ionic/portals');
+    subscribe.mockImplementation(() => Promise.resolve(pluginListenerHandle));
+
+    const message: PortalMessage<void> = {
+      topic: MwaPortalSubscriptionTopics.linking,
+    };
+
+    // Act
+    const linkingPromise = getLinkingFlow();
+
+    const foundInvocation = (subscribe.mock.calls ?? []).find(
+      (invocation: any[]) =>
+        invocation[0] === MwaPortalSubscriptionTopics.linking,
+    );
+    expect(foundInvocation).toHaveLength(2);
+    const passedBackCallback = foundInvocation?.[1];
+
+    expect(typeof passedBackCallback).toBe('function');
+    passedBackCallback(message);
+
+    // Verify
+    await expect(linkingPromise).rejects.toBe('No data received');
   });
 });
