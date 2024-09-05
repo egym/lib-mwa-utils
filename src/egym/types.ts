@@ -28,6 +28,11 @@ export interface MwaExerciserInfo {
   tenantLocale: string;
 }
 
+export interface MwaLinking {
+  status: 'linked' | 'unlinked';
+  egymEmail: string;
+}
+
 export type MwaPortalMessageTopics = 'subscription';
 
 export type MwaPortalCommands =
@@ -38,7 +43,9 @@ export type MwaPortalCommands =
   | 'openNativeFeature'
   | 'openWebView'
   | 'openUrlExternally'
-  | 'trackEvent';
+  | 'trackEvent'
+  | 'setWidgetHeight'
+  | 'linking';
 
 export type MwaPortalCommandsData<Data = any> = {
   type: MwaPortalCommands;
@@ -49,6 +56,8 @@ export enum MwaPortalSubscriptionTopics {
   back = 'back',
   authToken = 'authToken',
   exerciserInfo = 'exerciserInfo',
+  linking = 'linking',
+  refresh = 'linking',
 }
 
 export type SubscriptionFn<T> = (

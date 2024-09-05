@@ -9,10 +9,14 @@ export {
   publishOpenUrlExternally,
   publishOpenWebView,
   publishTrackEvent,
+  publishSetWidgetHeight,
+  publishLinking,
 } from './mwa-commands';
 export {
   subscribeAuthToken,
   subscribeBack,
   subscribeExerciserInfo,
+  subscribeLinking,
+  subscribeRefresh,
 } from './mwa-subscriptions';
 export { getAuthTokenFlow, getExerciserInfoFlow } from './mwa-flows';

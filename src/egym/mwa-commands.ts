@@ -11,9 +11,10 @@ const publishCommand = (
   });
 };
 
-export const publishAuthToken = () => {
+export const publishAuthToken = (instanceId?: string) => {
   return publishCommand('subscription', {
     type: 'authToken',
+    data: { instanceId },
   });
 };
 
@@ -29,11 +30,15 @@ export const publishExerciserInfo = () => {
   });
 };
 
-export const publishOpenFeature = (startingRoute: string) => {
+export const publishOpenFeature = (
+  startingRoute: string,
+  instanceId?: string,
+) => {
   return publishCommand('subscription', {
     type: 'openFeature',
     data: {
       startingRoute,
+      instanceId,
     },
   });
 };
@@ -71,9 +76,24 @@ export const publishOpenUrlExternally = (url: string) => {
 export const publishTrackEvent = (
   eventName: string,
   parameters?: { [key: string]: string },
+  instanceId?: string,
 ) => {
   return publishCommand('subscription', {
     type: 'trackEvent',
-    data: { name: eventName, parameters },
+    data: { name: eventName, parameters, instanceId },
+  });
+};
+
+export const publishSetWidgetHeight = (height: number, instanceId?: string) => {
+  return publishCommand('subscription', {
+    type: 'setWidgetHeight',
+    data: { height, instanceId },
+  });
+};
+
+export const publishLinking = (instanceId?: string) => {
+  return publishCommand('subscription', {
+    type: 'linking',
+    data: { instanceId },
   });
 };
