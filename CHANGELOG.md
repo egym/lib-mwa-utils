@@ -1,5 +1,11 @@
 # @egym/mwa-utils
 
+## 0.5.2
+
+### Patch Changes
+
+- pass instanceId to getLinkingFlow
+
 ## 0.5.1
 
 ### Patch Changes
