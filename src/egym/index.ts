@@ -19,4 +19,8 @@ export {
   subscribeLinking,
   subscribeRefresh,
 } from './mwa-subscriptions';
-export { getAuthTokenFlow, getExerciserInfoFlow } from './mwa-flows';
+export {
+  getAuthTokenFlow,
+  getExerciserInfoFlow,
+  getLinkingFlow,
+} from './mwa-flows';
