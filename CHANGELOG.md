@@ -1,5 +1,11 @@
 # @egym/mwa-utils
 
+## 0.6.1
+
+### Patch Changes
+
+- UPD doc
+
 ## 0.6.0
 
 ### Minor Changes

@@ -84,13 +84,13 @@ Enable optional features:
 npm run new
 ```
 
-Other commands:
+Release/publish changes to npm:
 
 ```bash
 npm run lint         # Lint and fix source files
 npm run change       # Add a new changeset
 npm run bump         # Update version and changelog via changeset
-npm run release      # Release the package
 ```
+Push changes to the branch, create tag and draft release 
 
 For more information, see the [Modern.js Module documentation](https://modernjs.dev/module-tools/en).
