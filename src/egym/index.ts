@@ -10,6 +10,7 @@ export {
   publishOpenWebView,
   publishTrackEvent,
   publishSetWidgetHeight,
+  publishContentLoadingDidFinish,
   publishLinking,
 } from './mwa-commands';
 export {

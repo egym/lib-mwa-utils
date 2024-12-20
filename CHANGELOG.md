@@ -1,5 +1,11 @@
 # @egym/mwa-utils
 
+## 0.6.0
+
+### Minor Changes
+
+- Add contentLoadingDidFinish event and remove instanceId param
+
 ## 0.5.2
 
 ### Patch Changes

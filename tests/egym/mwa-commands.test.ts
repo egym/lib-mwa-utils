@@ -1,5 +1,3 @@
-/* eslint-disable max-lines */
-
 import { PortalMessage } from '@ionic/portals';
 import {
   MwaPortalCommandsData,
@@ -12,7 +10,11 @@ import {
   publishOpenWebView,
   publishTrackEvent,
 } from '@/egym';
-import { publishLinking, publishSetWidgetHeight } from '@/egym/mwa-commands';
+import {
+  publishLinking,
+  publishSetWidgetHeight,
+  publishContentLoadingDidFinish,
+} from '@/egym/mwa-commands';
 
 jest.mock('@ionic/portals', () => {
   return {
@@ -26,13 +28,12 @@ describe('useMwaPortalCommands test cases', () => {
     publish.mockReset();
   });
 
-  test('Publish authToken command without instanceId', async () => {
+  test('Publish authToken command', async () => {
     // Setup
     const expectedCommand: PortalMessage<MwaPortalCommandsData> = {
       topic: 'subscription',
       data: {
         type: 'authToken',
-        data: {},
       },
     };
     const { publish } = jest.requireMock('@ionic/portals');
@@ -40,29 +41,6 @@ describe('useMwaPortalCommands test cases', () => {
 
     // Act
     const authTokenResult = await publishAuthToken();
-
-    // Verify
-    expect(authTokenResult).toBeUndefined();
-    expect(publish).toBeCalledTimes(1);
-    expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
-  });
-
-  test('Publish authToken command with instanceId', async () => {
-    // Setup
-    const expectedCommand: PortalMessage<MwaPortalCommandsData> = {
-      topic: 'subscription',
-      data: {
-        type: 'authToken',
-        data: {
-          instanceId: 'test-instance-id',
-        },
-      },
-    };
-    const { publish } = jest.requireMock('@ionic/portals');
-    publish.mockImplementationOnce(() => Promise.resolve());
-
-    // Act
-    const authTokenResult = await publishAuthToken('test-instance-id');
 
     // Verify
     expect(authTokenResult).toBeUndefined();
@@ -314,34 +292,7 @@ describe('useMwaPortalCommands test cases', () => {
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
 
-  test('Publish setWidgetHeight command with instanceId', async () => {
-    // Setup
-    const expectedCommand: PortalMessage<MwaPortalCommandsData> = {
-      topic: 'subscription',
-      data: {
-        type: 'setWidgetHeight',
-        data: {
-          height: 444,
-          instanceId: 'microWebAppTrainingPlansWidget',
-        },
-      },
-    };
-    const { publish } = jest.requireMock('@ionic/portals');
-    publish.mockImplementationOnce(() => Promise.resolve());
-
-    // Act
-    const setWidgetHeightResult = await publishSetWidgetHeight(
-      444,
-      'microWebAppTrainingPlansWidget',
-    );
-
-    // Verify
-    expect(setWidgetHeightResult).toBeUndefined();
-    expect(publish).toBeCalledTimes(1);
-    expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
-  });
-
-  test('Publish setWidgetHeight command without instanceId', async () => {
+  test('Publish setWidgetHeight command', async () => {
     // Setup
     const expectedCommand: PortalMessage<MwaPortalCommandsData> = {
       topic: 'subscription',
@@ -364,38 +315,32 @@ describe('useMwaPortalCommands test cases', () => {
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
 
-  test('Publish linking command with instanceId', async () => {
+  test('Publish contentLoadingDidFinish command', async () => {
     // Setup
     const expectedCommand: PortalMessage<MwaPortalCommandsData> = {
       topic: 'subscription',
       data: {
-        type: 'linking',
-        data: {
-          instanceId: 'microWebAppTrainingPlansWidget',
-        },
+        type: 'contentLoadingDidFinish',
       },
     };
     const { publish } = jest.requireMock('@ionic/portals');
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
-    const linkingResult = await publishLinking(
-      'microWebAppTrainingPlansWidget',
-    );
+    const setWidgetHeightResult = await publishContentLoadingDidFinish();
 
     // Verify
-    expect(linkingResult).toBeUndefined();
+    expect(setWidgetHeightResult).toBeUndefined();
     expect(publish).toBeCalledTimes(1);
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
 
-  test('Publish linking command without instanceId', async () => {
+  test('Publish linking command', async () => {
     // Setup
     const expectedCommand: PortalMessage<MwaPortalCommandsData> = {
       topic: 'subscription',
       data: {
         type: 'linking',
-        data: {},
       },
     };
     const { publish } = jest.requireMock('@ionic/portals');

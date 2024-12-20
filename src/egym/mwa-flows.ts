@@ -88,12 +88,9 @@ export const getExerciserInfoFlow = (): Promise<MwaExerciserInfo> => {
 
 let linkingFlow: MwaFlowFn<MwaLinking>;
 
-export const getLinkingFlow = (instanceId: string): Promise<MwaLinking> => {
+export const getLinkingFlow = (): Promise<MwaLinking> => {
   if (!linkingFlow) {
-    linkingFlow = buildMwaFlow(
-      () => publishLinking(instanceId),
-      subscribeLinking,
-    );
+    linkingFlow = buildMwaFlow(() => publishLinking(), subscribeLinking);
   }
   return linkingFlow();
 };

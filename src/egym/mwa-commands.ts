@@ -11,10 +11,9 @@ const publishCommand = (
   });
 };
 
-export const publishAuthToken = (instanceId?: string) => {
+export const publishAuthToken = () => {
   return publishCommand('subscription', {
     type: 'authToken',
-    data: { instanceId },
   });
 };
 
@@ -30,15 +29,11 @@ export const publishExerciserInfo = () => {
   });
 };
 
-export const publishOpenFeature = (
-  startingRoute: string,
-  instanceId?: string,
-) => {
+export const publishOpenFeature = (startingRoute: string) => {
   return publishCommand('subscription', {
     type: 'openFeature',
     data: {
       startingRoute,
-      instanceId,
     },
   });
 };
@@ -76,24 +71,28 @@ export const publishOpenUrlExternally = (url: string) => {
 export const publishTrackEvent = (
   eventName: string,
   parameters?: { [key: string]: string },
-  instanceId?: string,
 ) => {
   return publishCommand('subscription', {
     type: 'trackEvent',
-    data: { name: eventName, parameters, instanceId },
+    data: { name: eventName, parameters },
   });
 };
 
-export const publishSetWidgetHeight = (height: number, instanceId?: string) => {
+export const publishSetWidgetHeight = (height: number) => {
   return publishCommand('subscription', {
     type: 'setWidgetHeight',
-    data: { height, instanceId },
+    data: { height },
   });
 };
 
-export const publishLinking = (instanceId?: string) => {
+export const publishContentLoadingDidFinish = () => {
+  return publishCommand('subscription', {
+    type: 'contentLoadingDidFinish',
+  });
+};
+
+export const publishLinking = () => {
   return publishCommand('subscription', {
     type: 'linking',
-    data: { instanceId },
   });
 };
