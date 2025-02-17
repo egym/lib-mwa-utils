@@ -1,5 +1,12 @@
 # @egym/mwa-utils
 
+## 0.7.0
+
+### Updated peer dependencies
+
+- "@capacitor/core": "^7.0.0",
+- "@ionic/portals": "0.12.0"
+
 ## 0.6.1
 
 ### Patch Changes
