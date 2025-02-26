@@ -199,9 +199,7 @@ describe('useMwaPortalSubscriptions test cases', () => {
     expect(subscribe).toBeCalledTimes(1);
     expect(subscribeReturn).toEqual(pluginListenerHandle);
 
-    expect(subscribe.mock.calls[0][0]).toEqual(
-      MwaPortalSubscriptionTopics.refresh,
-    );
+    expect(subscribe.mock.calls[0][0]).toEqual('refresh');
 
     const passedBackCallback = subscribe.mock.calls[0][1];
     expect(typeof passedBackCallback).toBe('function');
