@@ -1,5 +1,11 @@
 # @egym/mwa-utils
 
+## 0.7.1
+
+### Patch Changes
+
+- Fix refresh event
+
 ## 0.7.0
 
 ### Updated peer dependencies
