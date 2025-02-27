@@ -58,7 +58,7 @@ export enum MwaPortalSubscriptionTopics {
   authToken = 'authToken',
   exerciserInfo = 'exerciserInfo',
   linking = 'linking',
-  refresh = 'linking',
+  refresh = 'refresh',
 }
 
 export type SubscriptionFn<T> = (

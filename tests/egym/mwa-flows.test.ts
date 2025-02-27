@@ -184,9 +184,9 @@ describe('useMwaPortalFlows test cases', () => {
     };
 
     // Act - when invoked multiple times, it should always return the same promise until it gets resolved
-    const linkingPromise1 = getLinkingFlow('trainingPlans');
-    const linkingPromise2 = getLinkingFlow('trainingPlans');
-    const linkingPromise3 = getLinkingFlow('trainingPlans');
+    const linkingPromise1 = getLinkingFlow();
+    const linkingPromise2 = getLinkingFlow();
+    const linkingPromise3 = getLinkingFlow();
 
     const foundInvocation = (subscribe.mock.calls ?? []).find(
       (invocation: any[]) =>
@@ -218,7 +218,7 @@ describe('useMwaPortalFlows test cases', () => {
     };
 
     // Act
-    const linkingPromise = getLinkingFlow('trainingPlans');
+    const linkingPromise = getLinkingFlow();
 
     const foundInvocation = (subscribe.mock.calls ?? []).find(
       (invocation: any[]) =>
