@@ -31,7 +31,7 @@ The following functions are available to send commands to the BMA:
     * `url` is the url to open in the external web view.
 1. `publishTrackEvent(eventName: string, feature?: string, parameters?: { [key: string]: string })` publishes the `trackEvent` command to the BMA.
     * `eventName` is the name of the event to track.
-    * `feature` is an optional string that represents the feature where the event is tracked. Use this if you want to use Segment to track the event.
+    * `feature` is an optional string parameter represents the feature where the event is tracked. If not specified, Firebase Analytics tracking will be used by default. If specified, the event will be tracked using a custom Backend or Segment analytics, depending on whether Segment settings are enabled for the brand.
     * `parameters` is an optional object with key-value pairs to pass to the event.
 
 ### MWA Subscriptions
