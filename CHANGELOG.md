@@ -1,5 +1,11 @@
 # @egym/mwa-utils
 
+## 0.7.2
+
+### Patch Changes
+
+- Added the optional param `feature` to `trackEvent` command 
+
 ## 0.7.1
 
 ### Patch Changes

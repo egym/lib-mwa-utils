@@ -247,6 +247,7 @@ describe('useMwaPortalCommands test cases', () => {
         type: 'trackEvent',
         data: {
           name: 'event-name',
+          feature: 'feature',
           parameters: {
             paramA: 'valueA',
             'other-param': 'otherValue',
@@ -258,7 +259,7 @@ describe('useMwaPortalCommands test cases', () => {
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
-    const trackEventResult = await publishTrackEvent('event-name', {
+    const trackEventResult = await publishTrackEvent('event-name', 'feature', {
       paramA: 'valueA',
       'other-param': 'otherValue',
     });
@@ -269,7 +270,37 @@ describe('useMwaPortalCommands test cases', () => {
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
 
-  test('Publish trackEvent command without parameters', async () => {
+  test('Publish trackEvent command without feature', async () => {
+    // Setup
+    const expectedCommand: PortalMessage<MwaPortalCommandsData> = {
+      topic: 'subscription',
+      data: {
+        type: 'trackEvent',
+        data: {
+          name: 'event-name',
+          parameters: {
+            paramA: 'valueA',
+            'other-param': 'otherValue',
+          },
+        },
+      },
+    };
+    const { publish } = jest.requireMock('@ionic/portals');
+    publish.mockImplementationOnce(() => Promise.resolve());
+
+    // Act
+    const trackEventResult = await publishTrackEvent('event-name', undefined, {
+      paramA: 'valueA',
+      'other-param': 'otherValue',
+    });
+
+    // Verify
+    expect(trackEventResult).toBeUndefined();
+    expect(publish).toBeCalledTimes(1);
+    expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
+  });
+
+  test('Publish trackEvent command without feature and parameters', async () => {
     // Setup
     const expectedCommand: PortalMessage<MwaPortalCommandsData> = {
       topic: 'subscription',

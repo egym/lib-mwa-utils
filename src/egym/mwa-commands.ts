@@ -70,11 +70,12 @@ export const publishOpenUrlExternally = (url: string) => {
 
 export const publishTrackEvent = (
   eventName: string,
+  feature?: string,
   parameters?: { [key: string]: string },
 ) => {
   return publishCommand('subscription', {
     type: 'trackEvent',
-    data: { name: eventName, parameters },
+    data: { name: eventName, feature, parameters },
   });
 };
 
