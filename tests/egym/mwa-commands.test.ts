@@ -247,6 +247,7 @@ describe('useMwaPortalCommands test cases', () => {
         type: 'trackEvent',
         data: {
           name: 'event-name',
+          feature: 'feature',
           parameters: {
             paramA: 'valueA',
             'other-param': 'otherValue',
@@ -258,7 +259,7 @@ describe('useMwaPortalCommands test cases', () => {
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
-    const trackEventResult = await publishTrackEvent('event-name', {
+    const trackEventResult = await publishTrackEvent('event-name', 'feature', {
       paramA: 'valueA',
       'other-param': 'otherValue',
     });
