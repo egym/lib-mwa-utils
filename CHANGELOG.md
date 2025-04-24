@@ -1,10 +1,16 @@
 # @egym/mwa-utils
 
+## 0.7.3
+
+### Patch Changes
+
+- allow all capacitor/core 7.x.x and ionic/portals 0.12.x versions
+
 ## 0.7.2
 
 ### Patch Changes
 
-- Added the optional param `feature` to `trackEvent` command 
+- Added the optional param `feature` to `trackEvent` command
 
 ## 0.7.1
 
