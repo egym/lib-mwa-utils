@@ -31,3 +31,9 @@ export const subscribeRefresh = (
 ) => {
   return portalsSubscribe(MwaPortalSubscriptionTopics.refresh, callback);
 };
+
+export const subscribeForceRefresh = (
+  callback: (result: PortalMessage<void>) => void,
+) => {
+  return portalsSubscribe(MwaPortalSubscriptionTopics.forceRefresh, callback);
+};
