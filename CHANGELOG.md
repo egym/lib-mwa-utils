@@ -1,5 +1,11 @@
 # @egym/mwa-utils
 
+## 0.7.4
+
+### Patch Changes
+
+- Add forceRefresh event
+
 ## 0.7.3
 
 ### Patch Changes

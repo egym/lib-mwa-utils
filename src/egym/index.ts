@@ -17,6 +17,7 @@ export {
   subscribeAuthToken,
   subscribeBack,
   subscribeExerciserInfo,
+  subscribeForceRefresh,
   subscribeLinking,
   subscribeRefresh,
 } from './mwa-subscriptions';
