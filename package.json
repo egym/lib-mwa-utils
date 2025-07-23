@@ -48,6 +48,9 @@
     "rimraf": "~3.0.2",
     "typescript": "~5.0.4"
   },
+  "overrides": {
+    "form-data": "4.0.4"
+  },
   "sideEffects": [],
   "publishConfig": {
     "access": "public",
