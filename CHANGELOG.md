@@ -1,5 +1,11 @@
 # @egym/mwa-utils
 
+## 0.7.6
+
+### Minor Changes
+
+- Add openAppSettings command
+
 ## 0.7.4
 
 ### Patch Changes
