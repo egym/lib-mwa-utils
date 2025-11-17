@@ -33,6 +33,8 @@ The following functions are available to send commands to the BMA:
     * `eventName` is the name of the event to track.
     * `feature` is an optional string parameter represents the feature where the event is tracked. If not specified, Firebase Analytics tracking will be used by default. If specified, the event will be tracked using a custom Backend or Segment analytics, depending on whether Segment settings are enabled for the brand.
     * `parameters` is an optional object with key-value pairs to pass to the event.
+1. `publishOpenAppSettings()` publishes the `openAppSettings` command to the BMA.
+    * This command requests the native app to open the device’s app settings screen, allowing the user to enable permissions such as location access.
 
 ### MWA Subscriptions
 The following functions are available to subscribe to the BMA messages:

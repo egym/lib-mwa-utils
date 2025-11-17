@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { PortalMessage } from '@ionic/portals';
 import {
   MwaPortalCommandsData,
@@ -9,6 +10,7 @@ import {
   publishOpenUrlExternally,
   publishOpenWebView,
   publishTrackEvent,
+  publishOpenAppSettings,
 } from '@/egym';
 import {
   publishLinking,
@@ -382,6 +384,26 @@ describe('useMwaPortalCommands test cases', () => {
 
     // Verify
     expect(linkingResult).toBeUndefined();
+    expect(publish).toBeCalledTimes(1);
+    expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
+  });
+
+  test('Publish openAppSettings command', async () => {
+    // setup
+    const expectedCommand: PortalMessage<MwaPortalCommandsData> = {
+      topic: 'subscription',
+      data: {
+        type: 'openAppSettings',
+      },
+    };
+    const { publish } = jest.requireMock('@ionic/portals');
+    publish.mockImplementationOnce(() => Promise.resolve());
+
+    // Act
+    const openAppSettingsResult = await publishOpenAppSettings();
+
+    // Verify
+    expect(openAppSettingsResult).toBeUndefined();
     expect(publish).toBeCalledTimes(1);
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
