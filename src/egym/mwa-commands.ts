@@ -97,3 +97,9 @@ export const publishLinking = () => {
     type: 'linking',
   });
 };
+
+export const publishOpenAppSettings = () => {
+  return publishCommand('subscription', {
+    type: 'openAppSettings',
+  });
+};

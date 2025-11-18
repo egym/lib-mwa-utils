@@ -12,6 +12,7 @@ export {
   publishSetWidgetHeight,
   publishContentLoadingDidFinish,
   publishLinking,
+  publishOpenAppSettings,
 } from './mwa-commands';
 export {
   subscribeAuthToken,

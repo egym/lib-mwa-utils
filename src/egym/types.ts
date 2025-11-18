@@ -46,7 +46,8 @@ export type MwaPortalCommands =
   | 'trackEvent'
   | 'setWidgetHeight'
   | 'contentLoadingDidFinish'
-  | 'linking';
+  | 'linking'
+  | 'openAppSettings';
 
 export type MwaPortalCommandsData<Data = any> = {
   type: MwaPortalCommands;
