@@ -47,7 +47,8 @@ export type MwaPortalCommands =
   | 'setWidgetHeight'
   | 'contentLoadingDidFinish'
   | 'linking'
-  | 'openAppSettings';
+  | 'openAppSettings'
+  | 'nativeAppStartingRoute';
 
 export type MwaPortalCommandsData<Data = any> = {
   type: MwaPortalCommands;

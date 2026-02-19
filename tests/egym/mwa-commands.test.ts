@@ -16,6 +16,7 @@ import {
   publishLinking,
   publishSetWidgetHeight,
   publishContentLoadingDidFinish,
+  publishNativeAppStartingRoute,
 } from '@/egym/mwa-commands';
 
 jest.mock('@ionic/portals', () => {
@@ -404,6 +405,52 @@ describe('useMwaPortalCommands test cases', () => {
 
     // Verify
     expect(openAppSettingsResult).toBeUndefined();
+    expect(publish).toBeCalledTimes(1);
+    expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
+  });
+
+  test('Publish nativeAppStartingRoute command with startingRoute', async () => {
+    // setup
+    const expectedCommand: PortalMessage<MwaPortalCommandsData> = {
+      topic: 'subscription',
+      data: {
+        type: 'nativeAppStartingRoute',
+        data: { startingRoute: '/test' },
+      },
+    };
+    const { publish } = jest.requireMock('@ionic/portals');
+    publish.mockImplementationOnce(() => Promise.resolve());
+
+    // Act
+    const nativeAppStartingRouteResult = await publishNativeAppStartingRoute(
+      '/test',
+    );
+
+    // Verify
+    expect(nativeAppStartingRouteResult).toBeUndefined();
+    expect(publish).toBeCalledTimes(1);
+    expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
+  });
+
+  test('Publish nativeAppStartingRoute command with null startingRoute', async () => {
+    // setup
+    const expectedCommand: PortalMessage<MwaPortalCommandsData> = {
+      topic: 'subscription',
+      data: {
+        type: 'nativeAppStartingRoute',
+        data: { startingRoute: null },
+      },
+    };
+    const { publish } = jest.requireMock('@ionic/portals');
+    publish.mockImplementationOnce(() => Promise.resolve());
+
+    // Act
+    const nativeAppStartingRouteResult = await publishNativeAppStartingRoute(
+      null,
+    );
+
+    // Verify
+    expect(nativeAppStartingRouteResult).toBeUndefined();
     expect(publish).toBeCalledTimes(1);
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
