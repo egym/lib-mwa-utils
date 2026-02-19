@@ -1,5 +1,11 @@
 # @egym/mwa-utils
 
+## 0.7.7
+
+### Patch Changes
+
+- Add publishNativeAppStartingRoute command
+
 ## 0.7.6
 
 ### Minor Changes

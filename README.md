@@ -35,6 +35,9 @@ The following functions are available to send commands to the BMA:
     * `parameters` is an optional object with key-value pairs to pass to the event.
 1. `publishOpenAppSettings()` publishes the `openAppSettings` command to the BMA.
     * This command requests the native app to open the device’s app settings screen, allowing the user to enable permissions such as location access.
+1. `publishNativeAppStartingRoute(startingRoute: string | null)` publishes the `nativeAppStartingRoute` command to the BMA.
+    * This command sets the starting route for the native app that will be used when the native app is freshly launched the next time (e.g. after the app was killed by the OS).
+    * If `startingRoute` is `null`, the starting route will be reset to the default starting route.
 
 ### MWA Subscriptions
 The following functions are available to subscribe to the BMA messages:

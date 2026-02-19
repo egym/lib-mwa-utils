@@ -13,6 +13,7 @@ export {
   publishContentLoadingDidFinish,
   publishLinking,
   publishOpenAppSettings,
+  publishNativeAppStartingRoute,
 } from './mwa-commands';
 export {
   subscribeAuthToken,

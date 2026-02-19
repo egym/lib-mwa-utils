@@ -103,3 +103,10 @@ export const publishOpenAppSettings = () => {
     type: 'openAppSettings',
   });
 };
+
+export const publishNativeAppStartingRoute = (startingRoute: string | null) => {
+  return publishCommand('subscription', {
+    type: 'nativeAppStartingRoute',
+    data: { startingRoute },
+  });
+};
