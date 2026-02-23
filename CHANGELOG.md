@@ -1,5 +1,11 @@
 # @egym/mwa-utils
 
+## 0.7.11
+
+### Patch Changes
+
+- Node v24
+
 ## 0.7.10
 
 ### Patch Changes
