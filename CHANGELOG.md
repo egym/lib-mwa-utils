@@ -1,5 +1,11 @@
 # @egym/mwa-utils
 
+## 0.7.12
+
+### Patch Changes
+
+- Set repo url for publishing
+
 ## 0.7.11
 
 ### Patch Changes
