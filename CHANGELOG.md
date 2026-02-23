@@ -1,5 +1,11 @@
 # @egym/mwa-utils
 
+## 0.7.13
+
+### Patch Changes
+
+- Streamline command name across platforms
+
 ## 0.7.12
 
 ### Patch Changes

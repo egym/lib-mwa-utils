@@ -409,12 +409,12 @@ describe('useMwaPortalCommands test cases', () => {
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
 
-  test('Publish nativeAppStartingRoute command with startingRoute', async () => {
+  test('Publish setNativeAppStartingRoute command with startingRoute', async () => {
     // setup
     const expectedCommand: PortalMessage<MwaPortalCommandsData> = {
       topic: 'subscription',
       data: {
-        type: 'nativeAppStartingRoute',
+        type: 'setNativeAppStartingRoute',
         data: { startingRoute: '/test' },
       },
     };
@@ -432,12 +432,12 @@ describe('useMwaPortalCommands test cases', () => {
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
 
-  test('Publish nativeAppStartingRoute command with null startingRoute', async () => {
+  test('Publish setNativeAppStartingRoute command with null startingRoute', async () => {
     // setup
     const expectedCommand: PortalMessage<MwaPortalCommandsData> = {
       topic: 'subscription',
       data: {
-        type: 'nativeAppStartingRoute',
+        type: 'setNativeAppStartingRoute',
         data: { startingRoute: null },
       },
     };
