@@ -48,7 +48,7 @@ export type MwaPortalCommands =
   | 'contentLoadingDidFinish'
   | 'linking'
   | 'openAppSettings'
-  | 'nativeAppStartingRoute';
+  | 'setNativeAppStartingRoute';
 
 export type MwaPortalCommandsData<Data = any> = {
   type: MwaPortalCommands;

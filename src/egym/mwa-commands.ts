@@ -106,7 +106,7 @@ export const publishOpenAppSettings = () => {
 
 export const publishNativeAppStartingRoute = (startingRoute: string | null) => {
   return publishCommand('subscription', {
-    type: 'nativeAppStartingRoute',
+    type: 'setNativeAppStartingRoute',
     data: { startingRoute },
   });
 };
