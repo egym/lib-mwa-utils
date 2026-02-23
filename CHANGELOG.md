@@ -1,5 +1,11 @@
 # @egym/mwa-utils
 
+## 0.7.9
+
+### Patch Changes
+
+- Use npm instead of modernjs for publishing
+
 ## 0.7.8
 
 ### Patch Changes
