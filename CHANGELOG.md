@@ -1,5 +1,11 @@
 # @egym/mwa-utils
 
+## 0.7.10
+
+### Patch Changes
+
+- Another attempt at fixing publishing
+
 ## 0.7.9
 
 ### Patch Changes
