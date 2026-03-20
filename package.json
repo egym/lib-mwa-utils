@@ -1,6 +1,6 @@
 {
   "name": "@egym/mwa-utils",
-  "version": "0.7.13",
+  "version": "0.7.14",
   "types": "./dist/types/index.d.ts",
   "main": "./dist/lib/index.js",
   "module": "./dist/es/index.js",
@@ -31,7 +31,7 @@
   ],
   "peerDependencies": {
     "@capacitor/core": ">=4.1.0 <8.0.0",
-    "@egym/mwa-logger": "^0.2.8",
+    "@egym/mwa-logger": ">=0.2.8 <0.4.0",
     "@ionic/portals": ">=0.9.0 <0.13.0"
   },
   "devDependencies": {

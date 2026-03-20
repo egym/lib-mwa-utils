@@ -1,5 +1,11 @@
 # @egym/mwa-utils
 
+## 0.7.14
+
+### Patch Changes
+
+- Relax the `@egym/mwa-logger` peer dependency range to allow the published 0.3.x releases.
+
 ## 0.7.13
 
 ### Patch Changes
