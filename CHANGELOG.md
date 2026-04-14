@@ -1,5 +1,11 @@
 # @egym/mwa-utils
 
+## 0.7.14
+
+### Patch Changes
+
+- Update Axios
+
 ## 0.7.13
 
 ### Patch Changes
