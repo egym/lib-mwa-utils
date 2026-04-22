@@ -1,5 +1,11 @@
 # @egym/mwa-utils
 
+## 0.8.0
+
+### Minor Changes
+
+- Add support for Capacitor 8
+
 ## 0.7.15
 
 ### Patch Changes
