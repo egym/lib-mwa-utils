@@ -1,4 +1,8 @@
-import { InitialContext } from '@ionic/portals';
+import {
+  getInitialContext as portalsGetInitialContext,
+  InitialContext,
+} from '@ionic/portals';
+import { describe, expect, test, vi } from 'vitest';
 import { MwaInitialContext, getMwaInitialContext } from '@/egym';
 
 const initialContext: MwaInitialContext = {
@@ -15,16 +19,17 @@ const initialContext: MwaInitialContext = {
   url: 'https://example.com',
 };
 
-jest.mock('@ionic/portals', () => {
+vi.mock('@ionic/portals', () => {
   return {
-    getInitialContext: jest.fn(),
+    getInitialContext: vi.fn(),
   };
 });
+
+const getInitialContext = vi.mocked(portalsGetInitialContext);
 
 describe('getMwaInitialContext test cases', () => {
   test('getMwaInitialContext returns the initial context', () => {
     // Setup
-    const { getInitialContext } = jest.requireMock('@ionic/portals');
     const initialContextWrapper: InitialContext<MwaInitialContext> = {
       name: 'Test initialContext',
       value: initialContext,
@@ -35,7 +40,7 @@ describe('getMwaInitialContext test cases', () => {
     const initialContextReturn = getMwaInitialContext();
 
     // Verify
-    expect(getInitialContext).toBeCalledTimes(1);
+    expect(getInitialContext).toHaveBeenCalledTimes(1);
     expect(initialContextReturn).toEqual(initialContext);
   });
 });
