@@ -68,13 +68,24 @@ The following functions that implement the MWA Flows are available:
 
 `@egym/mwa-utils` uses the peer dependencies installed by the consuming MWA:
 
-- `@capacitor/core` 5.x through 8.x
+- `@capacitor/core` 4.1 through 8.x
 - `@ionic/portals` 0.9 through 0.13.x
 - `@egym/mwa-logger` 0.2.8 through 0.3.x
 
 The peer versions must also satisfy each other's compatibility requirements.
-In particular, Ionic Portals 0.13 requires Capacitor 8. The previously bundled
-Ionic Portals 0.7 / Capacitor 4 fallback is no longer included or supported.
+In particular, Ionic Portals 0.13 requires Capacitor 8.
+
+## Legacy Android fallback
+
+`getPortalsInitialContext` temporarily retains a bundled Ionic Portals 0.7.1 /
+Capacitor 4.8.1 fallback for DLL's Android integration. The installed
+`@ionic/portals` peer is always attempted first; only a thrown error activates
+the fallback. No other API uses the vendored implementation.
+
+Removal is blocked until DLL upgrades its Android integration from Capacitor 4.
+[BMACG-317](https://egym.atlassian.net/browse/BMACG-317) tracks confirmation
+of that rollout, deletion of `src/external-libs-sources`, removal of the
+fallback branch, peer-range cleanup, and packed-artifact verification.
 
 # Development
 

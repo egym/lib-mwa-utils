@@ -10,6 +10,7 @@ import {
   subscribe,
 } from '@ionic/portals';
 import { PluginListenerHandle } from '@capacitor/core';
+import { getInitialContext as getPortals07InitialContext } from '../external-libs-sources/ionicPortals0.7';
 
 export const getPortalsInitialContext = <T>() => {
   try {
@@ -17,9 +18,16 @@ export const getPortalsInitialContext = <T>() => {
     logDebug('Use installed portals');
 
     return result;
-  } catch (error) {
-    logDebug('getPortalsInitialContext --- failed', error);
-    throw error;
+  } catch {
+    try {
+      const result = getPortals07InitialContext<T>();
+      logDebug('Use v0.7.1 portals fallback');
+
+      return result;
+    } catch (error) {
+      logDebug('getPortalsInitialContext --- failed', error);
+      throw error;
+    }
   }
 };
 

@@ -4,6 +4,7 @@ import {
   InitialContext,
 } from '@ionic/portals';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
+import { getInitialContext as portals07GetInitialContext } from '@/external-libs-sources/ionicPortals0.7';
 import { getPortalsInitialContext } from '@/ionic-portals';
 
 vi.mock('@egym/mwa-logger', () => ({
@@ -18,12 +19,18 @@ vi.mock('@ionic/portals', () => ({
   subscribe: vi.fn(),
 }));
 
+vi.mock('@/external-libs-sources/ionicPortals0.7', () => ({
+  getInitialContext: vi.fn(),
+}));
+
 const getInitialContext = vi.mocked(portalsGetInitialContext);
+const get07InitialContext = vi.mocked(portals07GetInitialContext);
 const debug = vi.mocked(logDebug);
 
 describe('getPortalsInitialContext', () => {
   beforeEach(() => {
     getInitialContext.mockReset();
+    get07InitialContext.mockReset();
     debug.mockReset();
   });
 
@@ -37,6 +44,7 @@ describe('getPortalsInitialContext', () => {
     expect(getPortalsInitialContext<string>()).toBe(context);
     expect(getInitialContext).toHaveBeenCalledTimes(1);
     expect(debug).toHaveBeenCalledWith('Use installed portals');
+    expect(get07InitialContext).not.toHaveBeenCalled();
   });
 
   test('returns undefined outside a Portal', () => {
@@ -44,18 +52,37 @@ describe('getPortalsInitialContext', () => {
 
     expect(getPortalsInitialContext()).toBeUndefined();
     expect(getInitialContext).toHaveBeenCalledTimes(1);
+    expect(get07InitialContext).not.toHaveBeenCalled();
   });
 
-  test('logs and rethrows errors from the installed Portals package', () => {
-    const error = new Error('Portals unavailable');
+  test('uses the Portals 0.7 fallback when the installed package throws', () => {
+    const context: InitialContext<string> = {
+      name: 'legacy-test',
+      value: 'legacy-context',
+    };
     getInitialContext.mockImplementation(() => {
-      throw error;
+      throw new Error('Installed Portals unavailable');
+    });
+    get07InitialContext.mockReturnValue(context);
+
+    expect(getPortalsInitialContext<string>()).toBe(context);
+    expect(get07InitialContext).toHaveBeenCalledTimes(1);
+    expect(debug).toHaveBeenCalledWith('Use v0.7.1 portals fallback');
+  });
+
+  test('logs and rethrows errors from the Portals 0.7 fallback', () => {
+    const fallbackError = new Error('Portals fallback unavailable');
+    getInitialContext.mockImplementation(() => {
+      throw new Error('Installed Portals unavailable');
+    });
+    get07InitialContext.mockImplementation(() => {
+      throw fallbackError;
     });
 
-    expect(() => getPortalsInitialContext()).toThrow(error);
+    expect(() => getPortalsInitialContext()).toThrow(fallbackError);
     expect(debug).toHaveBeenCalledWith(
       'getPortalsInitialContext --- failed',
-      error,
+      fallbackError,
     );
   });
 });
