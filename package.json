@@ -35,7 +35,7 @@
     "bump": "changeset version",
     "pre": "changeset pre",
     "change-status": "changeset status",
-    "release": "changeset publish --provenance"
+    "release": "changeset publish"
   },
   "peerDependencies": {
     "@capacitor/core": ">=4.1.0 <9.0.0",

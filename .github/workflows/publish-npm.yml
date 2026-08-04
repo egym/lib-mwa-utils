@@ -2,6 +2,7 @@ name: Publish package to npmjs
 on:
   release:
     types: [published]
+  workflow_dispatch:
 permissions:
   contents: read
   id-token: write
@@ -18,3 +19,5 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm run release
+        env:
+          NPM_CONFIG_PROVENANCE: true
