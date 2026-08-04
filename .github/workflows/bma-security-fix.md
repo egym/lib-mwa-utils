@@ -21,11 +21,11 @@ on:
 # gh-aw requires the consuming workflow to grant every permission its imports
 # need, so this block cannot live in the shared file.
 permissions:
-  contents: read           # agent job stays read-only; every write happens in the safe-output job
-  pull-requests: read      # gh-aw strict mode REJECTS pull-requests: write here
+  contents: read # agent job stays read-only; every write happens in the safe-output job
+  pull-requests: read # gh-aw strict mode REJECTS pull-requests: write here
   issues: read
-  actions: read            # read the failing workflow runs + logs
-  copilot-requests: write  # in-Actions engine inference, org-billed, no PAT
+  actions: read # read the failing workflow runs + logs
+  copilot-requests: write # in-Actions engine inference, org-billed, no PAT
 
 imports:
   - egym/egym-ai-toolkit/.github/workflows/shared/bma-security-fix.md@f26e1cf57a8c7048888d76220964d2971c3845a7
@@ -41,7 +41,7 @@ env:
 
 runtimes:
   node:
-    version: "24.13.0"   # matches .nvmrc; gh-aw cannot read .nvmrc itself
+    version: '24.13.0' # matches .nvmrc; gh-aw cannot read .nvmrc itself
 
 mcp-scripts:
   npm-run:
