@@ -1,56 +1,61 @@
 {
   "name": "@egym/mwa-utils",
   "version": "0.7.15",
-  "types": "./dist/types/index.d.ts",
-  "main": "./dist/lib/index.js",
-  "module": "./dist/es/index.js",
-  "scripts": {
-    "prepare": "modern build && husky install",
-    "dev": "modern dev",
-    "build": "modern build",
-    "build:watch": "modern build -w",
-    "reset": "rimraf ./**/node_modules",
-    "lint": "modern lint",
-    "change": "modern change",
-    "bump": "modern bump",
-    "pre": "modern pre",
-    "change-status": "modern change-status",
-    "gen-release-note": "modern gen-release-note",
-    "new": "modern new",
-    "upgrade": "modern upgrade",
-    "test": "modern test"
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
   },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,mjs,cjs}": [
-      "node --max_old_space_size=8192 ./node_modules/eslint/bin/eslint.js --fix --color --cache --quiet"
-    ]
-  },
-  "eslintIgnore": [
-    "node_modules/",
-    "dist/"
+  "files": [
+    "dist"
   ],
+  "scripts": {
+    "dev": "tsdown --watch",
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings=0",
+    "lint:fix": "npm run lint -- --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run --coverage",
+    "test:watch": "vitest",
+    "check": "npm run lint && npm run format:check && npm run typecheck && npm test && npm run build",
+    "change": "changeset",
+    "bump": "changeset version",
+    "pre": "changeset pre",
+    "change-status": "changeset status",
+    "release": "changeset publish --provenance"
+  },
   "peerDependencies": {
-    "@capacitor/core": ">=4.1.0 <8.0.0",
+    "@capacitor/core": ">=4.1.0 <9.0.0",
     "@egym/mwa-logger": ">=0.2.8 <0.4.0",
-    "@ionic/portals": ">=0.9.0 <0.13.0"
+    "@ionic/portals": ">=0.9.0 <0.14.0"
   },
   "devDependencies": {
-    "@modern-js/eslint-config": "2.48.2",
-    "@modern-js/module-tools": "^2.48.2",
-    "@modern-js/plugin-testing": "2.48.2",
-    "@modern-js/runtime": "^2.49.2",
-    "@types/jest": "~29.2.4",
-    "@types/node": "~16.11.7",
-    "husky": "~8.0.1",
-    "lint-staged": "~13.1.0",
-    "prettier": "~2.8.1",
-    "rimraf": "~3.0.2",
-    "typescript": "~5.0.4"
-  },
-  "overrides": {
-    "form-data": "4.0.4"
+    "@changesets/cli": "^2.31.1",
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.10.0",
+    "@vitest/coverage-v8": "^4.1.10",
+    "eslint": "^10.8.0",
+    "prettier": "^3.9.6",
+    "tsdown": "^0.22.14",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.65.0",
+    "vitest": "^4.1.10"
   },
   "sideEffects": [],
+  "license": "MIT",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"

@@ -1,5 +1,6 @@
 import { PluginListenerHandle } from '@capacitor/core';
-import { PortalMessage } from '@ionic/portals';
+import { PortalMessage, subscribe as portalsSubscribe } from '@ionic/portals';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 import {
   MwaExerciserInfo,
   MwaPortalSubscriptionTopics,
@@ -9,29 +10,29 @@ import {
 } from '@/egym';
 import { subscribeLinking, subscribeRefresh } from '@/egym/mwa-subscriptions';
 
-jest.mock('@ionic/portals', () => {
+vi.mock('@ionic/portals', () => {
   return {
-    subscribe: jest.fn(),
+    subscribe: vi.fn(),
   };
 });
 
+const subscribe = vi.mocked(portalsSubscribe);
+
 describe('useMwaPortalSubscriptions test cases', () => {
   beforeEach(() => {
-    const { subscribe } = jest.requireMock('@ionic/portals');
     subscribe.mockReset();
   });
 
   test('subscribeBack registers correctly', async () => {
     // Setup
     const pluginListenerHandle: PluginListenerHandle = {
-      remove: jest.fn(),
+      remove: vi.fn(),
     };
-    const { subscribe } = jest.requireMock('@ionic/portals');
     subscribe.mockImplementationOnce(() =>
       Promise.resolve(pluginListenerHandle),
     );
 
-    const callback = jest.fn();
+    const callback = vi.fn();
 
     const message: PortalMessage<void> = {
       topic: MwaPortalSubscriptionTopics.back,
@@ -42,7 +43,7 @@ describe('useMwaPortalSubscriptions test cases', () => {
     const subscribeReturn = await subscribeBack(callback);
 
     // Verify
-    expect(subscribe).toBeCalledTimes(1);
+    expect(subscribe).toHaveBeenCalledTimes(1);
     expect(subscribeReturn).toEqual(pluginListenerHandle);
 
     expect(subscribe.mock.calls[0][0]).toEqual(
@@ -52,21 +53,20 @@ describe('useMwaPortalSubscriptions test cases', () => {
     const passedBackCallback = subscribe.mock.calls[0][1];
     expect(typeof passedBackCallback).toBe('function');
     passedBackCallback(message);
-    expect(callback).toBeCalledTimes(1);
-    expect(callback).toBeCalledWith(message);
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(message);
   });
 
   test('subscribeAuthToken registers correctly', async () => {
     // Setup
     const pluginListenerHandle: PluginListenerHandle = {
-      remove: jest.fn(),
+      remove: vi.fn(),
     };
-    const { subscribe } = jest.requireMock('@ionic/portals');
     subscribe.mockImplementationOnce(() =>
       Promise.resolve(pluginListenerHandle),
     );
 
-    const callback = jest.fn();
+    const callback = vi.fn();
     const authToken = 'auth-token';
 
     const message: PortalMessage<string> = {
@@ -78,7 +78,7 @@ describe('useMwaPortalSubscriptions test cases', () => {
     const subscribeReturn = await subscribeAuthToken(callback);
 
     // Verify
-    expect(subscribe).toBeCalledTimes(1);
+    expect(subscribe).toHaveBeenCalledTimes(1);
     expect(subscribeReturn).toEqual(pluginListenerHandle);
 
     expect(subscribe.mock.calls[0][0]).toEqual(
@@ -88,21 +88,20 @@ describe('useMwaPortalSubscriptions test cases', () => {
     const passedBackCallback = subscribe.mock.calls[0][1];
     expect(typeof passedBackCallback).toBe('function');
     passedBackCallback(message);
-    expect(callback).toBeCalledTimes(1);
-    expect(callback).toBeCalledWith(message);
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(message);
   });
 
   test('subscribeExerciserInfo registers correctly', async () => {
     // Setup
     const pluginListenerHandle: PluginListenerHandle = {
-      remove: jest.fn(),
+      remove: vi.fn(),
     };
-    const { subscribe } = jest.requireMock('@ionic/portals');
     subscribe.mockImplementationOnce(() =>
       Promise.resolve(pluginListenerHandle),
     );
 
-    const callback = jest.fn();
+    const callback = vi.fn();
     const exerciserInfo: MwaExerciserInfo = {
       email: 'user@example.com',
       firstName: 'John',
@@ -126,7 +125,7 @@ describe('useMwaPortalSubscriptions test cases', () => {
     const subscribeReturn = await subscribeExerciserInfo(callback);
 
     // Verify
-    expect(subscribe).toBeCalledTimes(1);
+    expect(subscribe).toHaveBeenCalledTimes(1);
     expect(subscribeReturn).toEqual(pluginListenerHandle);
 
     expect(subscribe.mock.calls[0][0]).toEqual(
@@ -136,21 +135,20 @@ describe('useMwaPortalSubscriptions test cases', () => {
     const passedBackCallback = subscribe.mock.calls[0][1];
     expect(typeof passedBackCallback).toBe('function');
     passedBackCallback(message);
-    expect(callback).toBeCalledTimes(1);
-    expect(callback).toBeCalledWith(message);
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(message);
   });
 
   test('subscribeLinking registers correctly', async () => {
     // Setup
     const pluginListenerHandle: PluginListenerHandle = {
-      remove: jest.fn(),
+      remove: vi.fn(),
     };
-    const { subscribe } = jest.requireMock('@ionic/portals');
     subscribe.mockImplementationOnce(() =>
       Promise.resolve(pluginListenerHandle),
     );
 
-    const callback = jest.fn();
+    const callback = vi.fn();
 
     const message: PortalMessage<void> = {
       topic: MwaPortalSubscriptionTopics.linking,
@@ -161,7 +159,7 @@ describe('useMwaPortalSubscriptions test cases', () => {
     const subscribeReturn = await subscribeLinking(callback);
 
     // Verify
-    expect(subscribe).toBeCalledTimes(1);
+    expect(subscribe).toHaveBeenCalledTimes(1);
     expect(subscribeReturn).toEqual(pluginListenerHandle);
 
     expect(subscribe.mock.calls[0][0]).toEqual(
@@ -171,21 +169,20 @@ describe('useMwaPortalSubscriptions test cases', () => {
     const passedBackCallback = subscribe.mock.calls[0][1];
     expect(typeof passedBackCallback).toBe('function');
     passedBackCallback(message);
-    expect(callback).toBeCalledTimes(1);
-    expect(callback).toBeCalledWith(message);
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(message);
   });
 
   test('subscribeRefresh registers correctly', async () => {
     // Setup
     const pluginListenerHandle: PluginListenerHandle = {
-      remove: jest.fn(),
+      remove: vi.fn(),
     };
-    const { subscribe } = jest.requireMock('@ionic/portals');
     subscribe.mockImplementationOnce(() =>
       Promise.resolve(pluginListenerHandle),
     );
 
-    const callback = jest.fn();
+    const callback = vi.fn();
 
     const message: PortalMessage<void> = {
       topic: MwaPortalSubscriptionTopics.refresh,
@@ -196,7 +193,7 @@ describe('useMwaPortalSubscriptions test cases', () => {
     const subscribeReturn = await subscribeRefresh(callback);
 
     // Verify
-    expect(subscribe).toBeCalledTimes(1);
+    expect(subscribe).toHaveBeenCalledTimes(1);
     expect(subscribeReturn).toEqual(pluginListenerHandle);
 
     expect(subscribe.mock.calls[0][0]).toEqual('refresh');
@@ -204,7 +201,7 @@ describe('useMwaPortalSubscriptions test cases', () => {
     const passedBackCallback = subscribe.mock.calls[0][1];
     expect(typeof passedBackCallback).toBe('function');
     passedBackCallback(message);
-    expect(callback).toBeCalledTimes(1);
-    expect(callback).toBeCalledWith(message);
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(message);
   });
 });

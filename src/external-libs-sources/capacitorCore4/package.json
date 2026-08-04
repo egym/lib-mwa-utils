@@ -5,6 +5,7 @@
   "homepage": "https://capacitorjs.com",
   "author": "Ionic Team <hi@ionic.io> (https://ionic.io)",
   "license": "MIT",
+  "main": "dist/index.js",
   "files": [
     "dist/",
     "types/",

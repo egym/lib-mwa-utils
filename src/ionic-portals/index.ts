@@ -15,18 +15,18 @@ import { getInitialContext as getPortals07InitialContext } from '../external-lib
 export const getPortalsInitialContext = <T>() => {
   try {
     const result = getInitialContext<T>();
-    logDebug('Use latest portals');
+    logDebug('Use installed portals');
 
     return result;
   } catch {
     try {
       const result = getPortals07InitialContext<T>();
-      logDebug('Use v0.7.1 portals');
+      logDebug('Use v0.7.1 portals fallback');
+
       return result;
-    } catch (e) {
-      logDebug('getPortalsInitialContext --- failed', e);
-      throw e;
-      return undefined;
+    } catch (error) {
+      logDebug('getPortalsInitialContext --- failed', error);
+      throw error;
     }
   }
 };

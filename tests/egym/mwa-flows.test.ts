@@ -1,5 +1,6 @@
 import { PluginListenerHandle } from '@capacitor/core';
-import { PortalMessage } from '@ionic/portals';
+import { PortalMessage, subscribe as portalsSubscribe } from '@ionic/portals';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 import {
   MwaExerciserInfo,
   MwaPortalSubscriptionTopics,
@@ -9,16 +10,17 @@ import {
 } from '@/egym';
 import { getLinkingFlow } from '@/egym/mwa-flows';
 
-jest.mock('@ionic/portals', () => {
+vi.mock('@ionic/portals', () => {
   return {
-    subscribe: jest.fn(),
-    publish: jest.fn(),
+    subscribe: vi.fn(),
+    publish: vi.fn(),
   };
 });
 
+const subscribe = vi.mocked(portalsSubscribe);
+
 describe('useMwaPortalFlows test cases', () => {
   beforeEach(() => {
-    const { subscribe } = jest.requireMock('@ionic/portals');
     subscribe.mockReset();
   });
 
@@ -26,9 +28,8 @@ describe('useMwaPortalFlows test cases', () => {
     // Setup
     const authToken = 'this is not a real auth token';
     const pluginListenerHandle: PluginListenerHandle = {
-      remove: jest.fn(),
+      remove: vi.fn(),
     };
-    const { subscribe } = jest.requireMock('@ionic/portals');
     subscribe.mockImplementation(() => Promise.resolve(pluginListenerHandle));
 
     const message: PortalMessage<string> = {
@@ -49,21 +50,20 @@ describe('useMwaPortalFlows test cases', () => {
     const passedBackCallback = foundInvocation?.[1];
 
     expect(typeof passedBackCallback).toBe('function');
-    passedBackCallback(message);
+    passedBackCallback?.(message);
 
     // Verify
     await expect(authTokenPromise1).resolves.toBe(authToken);
     await expect(authTokenPromise2).resolves.toBe(authToken);
     await expect(authTokenPromise3).resolves.toBe(authToken);
-    expect(pluginListenerHandle.remove).toBeCalledTimes(1);
+    expect(pluginListenerHandle.remove).toHaveBeenCalledTimes(1);
   });
 
   test('getAuthToken get the token when data is undefined', async () => {
     // Setup
     const pluginListenerHandle: PluginListenerHandle = {
-      remove: jest.fn(),
+      remove: vi.fn(),
     };
-    const { subscribe } = jest.requireMock('@ionic/portals');
     subscribe.mockImplementation(() => Promise.resolve(pluginListenerHandle));
 
     const message: PortalMessage<string> = {
@@ -81,11 +81,11 @@ describe('useMwaPortalFlows test cases', () => {
     const passedBackCallback = foundInvocation?.[1];
 
     expect(typeof passedBackCallback).toBe('function');
-    passedBackCallback(message);
+    passedBackCallback?.(message);
 
     // Verify
     await expect(authTokenPromise).rejects.toBe('No data received');
-    expect(pluginListenerHandle.remove).toBeCalledTimes(1);
+    expect(pluginListenerHandle.remove).toHaveBeenCalledTimes(1);
   });
 
   test('getExerciserInfo get the Exerciser info correctly', async () => {
@@ -103,9 +103,8 @@ describe('useMwaPortalFlows test cases', () => {
       tenantLocale: 'en',
     };
     const pluginListenerHandle: PluginListenerHandle = {
-      remove: jest.fn(),
+      remove: vi.fn(),
     };
-    const { subscribe } = jest.requireMock('@ionic/portals');
     subscribe.mockImplementation(() => Promise.resolve(pluginListenerHandle));
 
     const message: PortalMessage<MwaExerciserInfo> = {
@@ -126,21 +125,20 @@ describe('useMwaPortalFlows test cases', () => {
     const passedBackCallback = foundInvocation?.[1];
 
     expect(typeof passedBackCallback).toBe('function');
-    passedBackCallback(message);
+    passedBackCallback?.(message);
 
     // Verify
     await expect(exerciserInfoPromise1).resolves.toBe(exerciserInfo);
     await expect(exerciserInfoPromise2).resolves.toBe(exerciserInfo);
     await expect(exerciserInfoPromise3).resolves.toBe(exerciserInfo);
-    expect(pluginListenerHandle.remove).toBeCalledTimes(1);
+    expect(pluginListenerHandle.remove).toHaveBeenCalledTimes(1);
   });
 
   test('getExerciserInfo get the Exerciser info when data is undefined', async () => {
     // Setup
     const pluginListenerHandle: PluginListenerHandle = {
-      remove: jest.fn(),
+      remove: vi.fn(),
     };
-    const { subscribe } = jest.requireMock('@ionic/portals');
     subscribe.mockImplementation(() => Promise.resolve(pluginListenerHandle));
 
     const message: PortalMessage<MwaExerciserInfo> = {
@@ -158,11 +156,11 @@ describe('useMwaPortalFlows test cases', () => {
     const passedBackCallback = foundInvocation?.[1];
 
     expect(typeof passedBackCallback).toBe('function');
-    passedBackCallback(message);
+    passedBackCallback?.(message);
 
     // Verify
     await expect(exerciserInfoPromise).rejects.toBe('No data received');
-    expect(pluginListenerHandle.remove).toBeCalledTimes(1);
+    expect(pluginListenerHandle.remove).toHaveBeenCalledTimes(1);
   });
 
   test('getLinkingFlow get the Linking correctly', async () => {
@@ -173,9 +171,8 @@ describe('useMwaPortalFlows test cases', () => {
     };
 
     const pluginListenerHandle: PluginListenerHandle = {
-      remove: jest.fn(),
+      remove: vi.fn(),
     };
-    const { subscribe } = jest.requireMock('@ionic/portals');
     subscribe.mockImplementation(() => Promise.resolve(pluginListenerHandle));
 
     const message: PortalMessage<MwaLinking> = {
@@ -196,21 +193,20 @@ describe('useMwaPortalFlows test cases', () => {
     const passedBackCallback = foundInvocation?.[1];
 
     expect(typeof passedBackCallback).toBe('function');
-    passedBackCallback(message);
+    passedBackCallback?.(message);
 
     // Verify
     await expect(linkingPromise1).resolves.toBe(linking);
     await expect(linkingPromise2).resolves.toBe(linking);
     await expect(linkingPromise3).resolves.toBe(linking);
-    expect(pluginListenerHandle.remove).toBeCalledTimes(1);
+    expect(pluginListenerHandle.remove).toHaveBeenCalledTimes(1);
   });
 
   test('getLinkingFlow get the Linking when data is undefined', async () => {
     // Setup
     const pluginListenerHandle: PluginListenerHandle = {
-      remove: jest.fn(),
+      remove: vi.fn(),
     };
-    const { subscribe } = jest.requireMock('@ionic/portals');
     subscribe.mockImplementation(() => Promise.resolve(pluginListenerHandle));
 
     const message: PortalMessage<void> = {
@@ -228,7 +224,7 @@ describe('useMwaPortalFlows test cases', () => {
     const passedBackCallback = foundInvocation?.[1];
 
     expect(typeof passedBackCallback).toBe('function');
-    passedBackCallback(message);
+    passedBackCallback?.(message);
 
     // Verify
     await expect(linkingPromise).rejects.toBe('No data received');

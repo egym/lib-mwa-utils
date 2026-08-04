@@ -3,6 +3,7 @@
   "version": "0.7.1",
   "description": "SDK Plugin for Ionic Portals",
   "homepage": "https://ionic.io/portals",
+  "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "types/index.d.ts",
   "files": [

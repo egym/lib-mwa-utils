@@ -1,5 +1,5 @@
-/* eslint-disable max-lines */
-import { PortalMessage } from '@ionic/portals';
+import { PortalMessage, publish as portalsPublish } from '@ionic/portals';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 import {
   MwaPortalCommandsData,
   publishAuthToken,
@@ -19,15 +19,16 @@ import {
   publishNativeAppStartingRoute,
 } from '@/egym/mwa-commands';
 
-jest.mock('@ionic/portals', () => {
+vi.mock('@ionic/portals', () => {
   return {
-    publish: jest.fn(),
+    publish: vi.fn(),
   };
 });
 
+const publish = vi.mocked(portalsPublish);
+
 describe('useMwaPortalCommands test cases', () => {
   beforeEach(() => {
-    const { publish } = jest.requireMock('@ionic/portals');
     publish.mockReset();
   });
 
@@ -39,7 +40,6 @@ describe('useMwaPortalCommands test cases', () => {
         type: 'authToken',
       },
     };
-    const { publish } = jest.requireMock('@ionic/portals');
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
@@ -47,7 +47,7 @@ describe('useMwaPortalCommands test cases', () => {
 
     // Verify
     expect(authTokenResult).toBeUndefined();
-    expect(publish).toBeCalledTimes(1);
+    expect(publish).toHaveBeenCalledTimes(1);
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
 
@@ -59,7 +59,6 @@ describe('useMwaPortalCommands test cases', () => {
         type: 'dismiss',
       },
     };
-    const { publish } = jest.requireMock('@ionic/portals');
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
@@ -67,7 +66,7 @@ describe('useMwaPortalCommands test cases', () => {
 
     // Verify
     expect(dismissResult).toBeUndefined();
-    expect(publish).toBeCalledTimes(1);
+    expect(publish).toHaveBeenCalledTimes(1);
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
 
@@ -79,7 +78,6 @@ describe('useMwaPortalCommands test cases', () => {
         type: 'exerciserInfo',
       },
     };
-    const { publish } = jest.requireMock('@ionic/portals');
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
@@ -87,7 +85,7 @@ describe('useMwaPortalCommands test cases', () => {
 
     // Verify
     expect(exerciserInfoResult).toBeUndefined();
-    expect(publish).toBeCalledTimes(1);
+    expect(publish).toHaveBeenCalledTimes(1);
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
 
@@ -102,7 +100,6 @@ describe('useMwaPortalCommands test cases', () => {
         },
       },
     };
-    const { publish } = jest.requireMock('@ionic/portals');
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
@@ -110,7 +107,7 @@ describe('useMwaPortalCommands test cases', () => {
 
     // Verify
     expect(openFeatureResult).toBeUndefined();
-    expect(publish).toBeCalledTimes(1);
+    expect(publish).toHaveBeenCalledTimes(1);
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
 
@@ -126,7 +123,6 @@ describe('useMwaPortalCommands test cases', () => {
         },
       },
     };
-    const { publish } = jest.requireMock('@ionic/portals');
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
@@ -137,7 +133,7 @@ describe('useMwaPortalCommands test cases', () => {
 
     // Verify
     expect(openNativeFeatureResult).toBeUndefined();
-    expect(publish).toBeCalledTimes(1);
+    expect(publish).toHaveBeenCalledTimes(1);
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
 
@@ -152,17 +148,15 @@ describe('useMwaPortalCommands test cases', () => {
         },
       },
     };
-    const { publish } = jest.requireMock('@ionic/portals');
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
-    const openNativeFeatureResult = await publishOpenNativeFeature(
-      'native-feature',
-    );
+    const openNativeFeatureResult =
+      await publishOpenNativeFeature('native-feature');
 
     // Verify
     expect(openNativeFeatureResult).toBeUndefined();
-    expect(publish).toBeCalledTimes(1);
+    expect(publish).toHaveBeenCalledTimes(1);
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
 
@@ -178,7 +172,6 @@ describe('useMwaPortalCommands test cases', () => {
         },
       },
     };
-    const { publish } = jest.requireMock('@ionic/portals');
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
@@ -189,7 +182,7 @@ describe('useMwaPortalCommands test cases', () => {
 
     // Verify
     expect(openWebViewResult).toBeUndefined();
-    expect(publish).toBeCalledTimes(1);
+    expect(publish).toHaveBeenCalledTimes(1);
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
 
@@ -205,7 +198,6 @@ describe('useMwaPortalCommands test cases', () => {
         },
       },
     };
-    const { publish } = jest.requireMock('@ionic/portals');
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
@@ -213,7 +205,7 @@ describe('useMwaPortalCommands test cases', () => {
 
     // Verify
     expect(openWebViewResult).toBeUndefined();
-    expect(publish).toBeCalledTimes(1);
+    expect(publish).toHaveBeenCalledTimes(1);
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
 
@@ -228,7 +220,6 @@ describe('useMwaPortalCommands test cases', () => {
         },
       },
     };
-    const { publish } = jest.requireMock('@ionic/portals');
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
@@ -238,7 +229,7 @@ describe('useMwaPortalCommands test cases', () => {
 
     // Verify
     expect(openUrlExternallyResult).toBeUndefined();
-    expect(publish).toBeCalledTimes(1);
+    expect(publish).toHaveBeenCalledTimes(1);
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
 
@@ -258,7 +249,6 @@ describe('useMwaPortalCommands test cases', () => {
         },
       },
     };
-    const { publish } = jest.requireMock('@ionic/portals');
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
@@ -269,7 +259,7 @@ describe('useMwaPortalCommands test cases', () => {
 
     // Verify
     expect(trackEventResult).toBeUndefined();
-    expect(publish).toBeCalledTimes(1);
+    expect(publish).toHaveBeenCalledTimes(1);
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
 
@@ -288,7 +278,6 @@ describe('useMwaPortalCommands test cases', () => {
         },
       },
     };
-    const { publish } = jest.requireMock('@ionic/portals');
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
@@ -299,7 +288,7 @@ describe('useMwaPortalCommands test cases', () => {
 
     // Verify
     expect(trackEventResult).toBeUndefined();
-    expect(publish).toBeCalledTimes(1);
+    expect(publish).toHaveBeenCalledTimes(1);
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
 
@@ -314,7 +303,6 @@ describe('useMwaPortalCommands test cases', () => {
         },
       },
     };
-    const { publish } = jest.requireMock('@ionic/portals');
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
@@ -322,7 +310,7 @@ describe('useMwaPortalCommands test cases', () => {
 
     // Verify
     expect(trackEventResult).toBeUndefined();
-    expect(publish).toBeCalledTimes(1);
+    expect(publish).toHaveBeenCalledTimes(1);
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
 
@@ -337,7 +325,6 @@ describe('useMwaPortalCommands test cases', () => {
         },
       },
     };
-    const { publish } = jest.requireMock('@ionic/portals');
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
@@ -345,7 +332,7 @@ describe('useMwaPortalCommands test cases', () => {
 
     // Verify
     expect(setWidgetHeightResult).toBeUndefined();
-    expect(publish).toBeCalledTimes(1);
+    expect(publish).toHaveBeenCalledTimes(1);
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
 
@@ -357,7 +344,6 @@ describe('useMwaPortalCommands test cases', () => {
         type: 'contentLoadingDidFinish',
       },
     };
-    const { publish } = jest.requireMock('@ionic/portals');
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
@@ -365,7 +351,7 @@ describe('useMwaPortalCommands test cases', () => {
 
     // Verify
     expect(setWidgetHeightResult).toBeUndefined();
-    expect(publish).toBeCalledTimes(1);
+    expect(publish).toHaveBeenCalledTimes(1);
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
 
@@ -377,7 +363,6 @@ describe('useMwaPortalCommands test cases', () => {
         type: 'linking',
       },
     };
-    const { publish } = jest.requireMock('@ionic/portals');
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
@@ -385,7 +370,7 @@ describe('useMwaPortalCommands test cases', () => {
 
     // Verify
     expect(linkingResult).toBeUndefined();
-    expect(publish).toBeCalledTimes(1);
+    expect(publish).toHaveBeenCalledTimes(1);
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
 
@@ -397,7 +382,6 @@ describe('useMwaPortalCommands test cases', () => {
         type: 'openAppSettings',
       },
     };
-    const { publish } = jest.requireMock('@ionic/portals');
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
@@ -405,7 +389,7 @@ describe('useMwaPortalCommands test cases', () => {
 
     // Verify
     expect(openAppSettingsResult).toBeUndefined();
-    expect(publish).toBeCalledTimes(1);
+    expect(publish).toHaveBeenCalledTimes(1);
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
 
@@ -418,17 +402,15 @@ describe('useMwaPortalCommands test cases', () => {
         data: { startingRoute: '/test' },
       },
     };
-    const { publish } = jest.requireMock('@ionic/portals');
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
-    const nativeAppStartingRouteResult = await publishNativeAppStartingRoute(
-      '/test',
-    );
+    const nativeAppStartingRouteResult =
+      await publishNativeAppStartingRoute('/test');
 
     // Verify
     expect(nativeAppStartingRouteResult).toBeUndefined();
-    expect(publish).toBeCalledTimes(1);
+    expect(publish).toHaveBeenCalledTimes(1);
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
 
@@ -441,17 +423,15 @@ describe('useMwaPortalCommands test cases', () => {
         data: { startingRoute: null },
       },
     };
-    const { publish } = jest.requireMock('@ionic/portals');
     publish.mockImplementationOnce(() => Promise.resolve());
 
     // Act
-    const nativeAppStartingRouteResult = await publishNativeAppStartingRoute(
-      null,
-    );
+    const nativeAppStartingRouteResult =
+      await publishNativeAppStartingRoute(null);
 
     // Verify
     expect(nativeAppStartingRouteResult).toBeUndefined();
-    expect(publish).toBeCalledTimes(1);
+    expect(publish).toHaveBeenCalledTimes(1);
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });
 });
