@@ -70,7 +70,7 @@ The following functions that implement the MWA Flows are available:
 
 - `@capacitor/core` 4.1 through 8.x
 - `@ionic/portals` 0.9 through 0.13.x
-- `@egym/mwa-logger` 0.2.8 through 0.3.x
+- `@egym/mwa-logger` 0.2.8 through 0.4.x
 
 The peer versions must also satisfy each other's compatibility requirements.
 In particular, Ionic Portals 0.13 requires Capacitor 8.
