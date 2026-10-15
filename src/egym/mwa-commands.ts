@@ -110,3 +110,9 @@ export const publishNativeAppStartingRoute = (startingRoute: string | null) => {
     data: { startingRoute },
   });
 };
+
+export const publishNativeAppSignout = () => {
+  return publishCommand('subscription', {
+    type: 'signout',
+  });
+};
