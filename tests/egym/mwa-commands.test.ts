@@ -17,6 +17,7 @@ import {
   publishSetWidgetHeight,
   publishContentLoadingDidFinish,
   publishNativeAppStartingRoute,
+  publishNativeAppSignout,
 } from '@/egym/mwa-commands';
 
 vi.mock('@ionic/portals', () => {
@@ -431,6 +432,25 @@ describe('useMwaPortalCommands test cases', () => {
 
     // Verify
     expect(nativeAppStartingRouteResult).toBeUndefined();
+    expect(publish).toHaveBeenCalledTimes(1);
+    expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
+  });
+
+  test('Publish signout command', async () => {
+    // setup
+    const expectedCommand: PortalMessage<MwaPortalCommandsData> = {
+      topic: 'subscription',
+      data: {
+        type: 'signout',
+      },
+    };
+    publish.mockImplementationOnce(() => Promise.resolve());
+
+    // Act
+    const nativeAppSignoutResult = await publishNativeAppSignout();
+
+    // Verify
+    expect(nativeAppSignoutResult).toBeUndefined();
     expect(publish).toHaveBeenCalledTimes(1);
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
   });

@@ -44,6 +44,8 @@ The following functions are available to send commands to the BMA:
 1. `publishNativeAppStartingRoute(startingRoute: string | null)` publishes the `nativeAppStartingRoute` command to the BMA.
    - This command sets the starting route for the native app that will be used when the native app is freshly launched the next time (e.g. after the app was killed by the OS).
    - If `startingRoute` is `null`, the starting route will be reset to the default starting route.
+1. `publishNativeAppSignout()` publishes the `signout` command to the BMA.
+   - This command requests the native app to sign out the current user.
 
 ### MWA Subscriptions
 

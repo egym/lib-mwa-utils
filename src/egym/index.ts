@@ -14,6 +14,7 @@ export {
   publishLinking,
   publishOpenAppSettings,
   publishNativeAppStartingRoute,
+  publishNativeAppSignout,
 } from './mwa-commands';
 export {
   subscribeAuthToken,
