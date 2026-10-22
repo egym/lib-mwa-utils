@@ -41,6 +41,9 @@ The following functions are available to send commands to the BMA:
    - `parameters` is an optional object with key-value pairs to pass to the event.
 1. `publishOpenAppSettings()` publishes the `openAppSettings` command to the BMA.
    - This command requests the native app to open the device’s app settings screen, allowing the user to enable permissions such as location access.
+1. `publishOnboardingPushPermissionRejected()` publishes `{"topic":"subscription","data":{"type":"onboardingPushPermissionRejected"}}` to the BMA when the user rejects push permission during onboarding.
+   - Android handles this event by calling its existing `NotificationConsentRejectTimeUseCase.setLastRejected()` to record the native rejection time. Reminder timing and storage are unchanged.
+   - This command takes no arguments, requests no permission, and returns the publisher's promise without waiting for a native acknowledgement.
 1. `publishNativeAppStartingRoute(startingRoute: string | null)` publishes the `nativeAppStartingRoute` command to the BMA.
    - This command sets the starting route for the native app that will be used when the native app is freshly launched the next time (e.g. after the app was killed by the OS).
    - If `startingRoute` is `null`, the starting route will be reset to the default starting route.

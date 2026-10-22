@@ -48,6 +48,7 @@ export type MwaPortalCommands =
   | 'contentLoadingDidFinish'
   | 'linking'
   | 'openAppSettings'
+  | 'onboardingPushPermissionRejected'
   | 'setNativeAppStartingRoute'
   | 'signout';
 

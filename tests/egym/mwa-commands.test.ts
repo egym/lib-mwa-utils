@@ -11,6 +11,7 @@ import {
   publishOpenWebView,
   publishTrackEvent,
   publishOpenAppSettings,
+  publishOnboardingPushPermissionRejected,
 } from '@/egym';
 import {
   publishLinking,
@@ -392,6 +393,34 @@ describe('useMwaPortalCommands test cases', () => {
     expect(openAppSettingsResult).toBeUndefined();
     expect(publish).toHaveBeenCalledTimes(1);
     expect(publish.mock.calls[0][0]).toEqual(expectedCommand);
+  });
+
+  test('Publish onboardingPushPermissionRejected command', async () => {
+    const expectedCommand: PortalMessage<MwaPortalCommandsData> = {
+      topic: 'subscription',
+      data: {
+        type: 'onboardingPushPermissionRejected',
+      },
+    };
+    publish.mockResolvedValueOnce(undefined);
+    const result = await publishOnboardingPushPermissionRejected();
+    expect(result).toBeUndefined();
+    expect(publish).toHaveBeenCalledTimes(1);
+    expect(publish.mock.calls[0]).toStrictEqual([expectedCommand]);
+  });
+  test('Return the onboardingPushPermissionRejected publisher promise', async () => {
+    const publishResult = Promise.resolve();
+    publish.mockReturnValueOnce(publishResult);
+    const result = publishOnboardingPushPermissionRejected();
+    expect(result).toBe(publishResult);
+    await expect(result).resolves.toBeUndefined();
+    expect(publish).toHaveBeenCalledTimes(1);
+  });
+  test('Propagate onboardingPushPermissionRejected publisher rejection', async () => {
+    const error = new Error('Publish failed');
+    publish.mockRejectedValueOnce(error);
+    await expect(publishOnboardingPushPermissionRejected()).rejects.toBe(error);
+    expect(publish).toHaveBeenCalledTimes(1);
   });
 
   test('Publish setNativeAppStartingRoute command with startingRoute', async () => {
