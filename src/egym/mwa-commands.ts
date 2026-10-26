@@ -104,6 +104,12 @@ export const publishOpenAppSettings = () => {
   });
 };
 
+export const publishOnboardingPushPermissionRejected = () => {
+  return publishCommand('subscription', {
+    type: 'onboardingPushPermissionRejected',
+  });
+};
+
 export const publishNativeAppStartingRoute = (startingRoute: string | null) => {
   return publishCommand('subscription', {
     type: 'setNativeAppStartingRoute',
