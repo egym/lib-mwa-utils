@@ -1,5 +1,5 @@
 ---
-'@egym/mwa-utils': minor
+'@egym/mwa-utils': patch
 ---
 
 Add publishOnboardingPushPermissionRejected() to notify the native app when push
