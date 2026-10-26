@@ -1,5 +1,12 @@
 # @egym/mwa-utils
 
+## 0.8.4
+
+### Patch Changes
+
+- 036e0c4: Add publishOnboardingPushPermissionRejected() to notify the native app when push
+  permission is rejected during onboarding, without sending a payload or timestamp.
+
 ## 0.8.1
 
 ### Patch Changes
