@@ -168,6 +168,14 @@ the queue adds combined-change validation without a separate manual
 branch-update requirement. This CI change does not activate a queue or enable
 PR auto-merge.
 
+The proposed initial Terraform settings are `SQUASH` / `ALLGREEN`, build
+concurrency `1`, minimum/maximum merge entries `1` / `1`, minimum-entry wait
+`0` minutes, and check-response timeout `60` minutes. These are dormant rollout
+values, not active settings. Single-entry groups limit initial diagnostic
+ambiguity; larger dependency batches require later tuning and verification.
+Activation is a separate reviewed change after CI merges, with authorized
+plan/apply and [BMACG-808](https://egym.atlassian.net/browse/BMACG-808) acceptance.
+
 Once the queue is active, obtain the normal reviews and passing PR checks, then
 enqueue the PR using GitHub's merge controls. Follow the same process for
 Dependabot updates; queued dependency changes are checked together with the
