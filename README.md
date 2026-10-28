@@ -136,6 +136,60 @@ Run every check used by CI and the publish workflows:
 npm run check
 ```
 
+## Merge queue CI
+
+The required check is **Build**, produced by GitHub Actions (app ID `15368`).
+The same job runs for pull requests targeting `main`, pushes to `main`, and
+`merge_group` events of type `checks_requested`. It installs the lockfile with
+`npm ci`, then runs lint, formatting, typechecking, Vitest with coverage, and the
+ESM/CommonJS/declaration build. No additional required check is needed.
+
+Checkout uses the event's default ref/SHA, so queue runs validate the synthetic
+commit containing the latest target branch and preceding queued changes, not
+just a PR head. There are no path filters, conditional job skips, concurrency
+cancellation groups, reusable workflows, secrets, or environment approvals in
+this workflow. Each run has a 15-minute timeout and read-only contents
+permission. It depends on GitHub-hosted Ubuntu runners, the pinned GitHub
+Actions, Node from `.nvmrc`, and npm registry access.
+
+Queue checks do not publish packages: the npm publish workflow accepts only
+published releases or manual dispatch, and GitHub Packages publishing accepts
+only published releases. A later GitHub release still follows the existing
+publish process.
+
+### Rollout and operation
+
+[BMACG-799](https://egym.atlassian.net/browse/BMACG-799) tracks the rollout.
+Merge this CI change into `main` before activating the queue through
+`egym/github-terraform`. That separate change owns queue settings and must retain
+the existing `Build`/`15368` requirement, signatures, review/code-owner policy,
+and authorized bypass policy. Keep strict required status checks disabled:
+the queue adds combined-change validation without a separate manual
+branch-update requirement. This CI change does not activate a queue or enable
+PR auto-merge.
+
+Once the queue is active, obtain the normal reviews and passing PR checks, then
+enqueue the PR using GitHub's merge controls. Follow the same process for
+Dependabot updates; queued dependency changes are checked together with the
+latest target branch and earlier queue entries. If a candidate fails, inspect
+the `Build` run on its merge-group SHA, fix the PR, and enqueue it again after
+the PR checks pass.
+
+After activation, verify multiple queued PRs (including dependency updates)
+produce successful `Build` checks from app `15368` on their merge-group SHAs.
+Confirm the tested commits include the latest `main` and earlier queue entries,
+and that a deliberately failing required check prevents a test candidate from
+merging. Perform that failure drill with a controlled PR; do not merge it.
+Local checks and ordinary PR CI alone cannot prove these queue behaviors.
+
+For rollback, disable/remove only the queue rule through `egym/github-terraform`,
+retaining the existing CI, signature, review, and bypass policies. Leave the
+merge-group trigger in place so pending queue runs can finish and reactivation
+remains safe. If the trigger must be reverted, deactivate the queue first;
+otherwise new queue commits will wait for a required check that never starts.
+
+## Publishing
+
 Release/publish changes to npm:
 
 ```bash
